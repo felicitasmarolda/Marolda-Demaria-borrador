@@ -1,5 +1,9 @@
 package queue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
 public class Queue {
 
   private ArrayList<Object> objetos = new ArrayList();
@@ -10,19 +14,19 @@ public class Queue {
 	}
 
 	public Queue add( Object  cargo ) {
-		objetos.add(cargo);
 		// TODO Auto-generated method stub
+		objetos.add(cargo);
 		return this;
 	}
 
 	public Object take() {
-    // TODO Auto-generated method stub
-		return null;
+    	// TODO Auto-generated method stub
+		return objetos.remove(0);
 	}
 
 	public Object head() {
 		// TODO Auto-generated method stub
-    return null;
+		return objetos.get(0);
 	}
 
 	public int size() {
@@ -31,4 +35,3 @@ public class Queue {
 	}
 
 }
-//cambio prueba
