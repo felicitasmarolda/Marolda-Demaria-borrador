@@ -20,13 +20,21 @@ public class Queue {
 	}
 
 	public Object take() {
-    	// TODO Auto-generated method stub
-		return objetos.remove(0);
+		// TODO Auto-generated method stub
+		if (objetos.isEmpty()) {
+			throw new Error("Queue is empty");
+		}
+		else
+			return objetos.remove(0);
 	}
 
 	public Object head() {
 		// TODO Auto-generated method stub
-		return objetos.get(0);
+		if (objetos.isEmpty()) {
+			throw new Error("Queue is empty");
+		}
+		else
+			return objetos.get(0);
 	}
 
 	public int size() {
