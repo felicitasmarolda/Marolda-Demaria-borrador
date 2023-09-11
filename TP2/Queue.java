@@ -39,7 +39,7 @@ public class Queue {
 
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return objetos.size();
 	}
 
 }
