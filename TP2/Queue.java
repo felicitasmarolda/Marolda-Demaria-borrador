@@ -2,12 +2,15 @@ package queue;
 
 public class Queue {
 
+  private ArrayList<Object> objetos = new ArrayList();
+
   public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return true;
+		return objetos.isEmpty();
 	}
 
 	public Queue add( Object  cargo ) {
+		objetos.add(cargo);
 		// TODO Auto-generated method stub
 		return this;
 	}
