@@ -85,6 +85,8 @@ private static final String Something = "Something";
       assertTrue( e.getMessage().equals( QueueIsEmpty ) );
     }
   }
+// Exception e = assertThrows(Exception.class, () -> queue.take());
+// assertTrue( e.getMessage().equals( QueueIsEmpty ) )
 
   @Test public void test09CanNotTakeWhenThereAreNoObjectsInTheQueueAndTheQueueHadObjects() {
     Queue queue = new Queue();
