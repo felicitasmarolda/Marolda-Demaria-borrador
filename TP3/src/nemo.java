@@ -45,46 +45,43 @@ public class Nemo {
 	
 
 	// ver si comando perpetuado es string[] o string 
-	public Nemo commandsForNemo(String[] commandChain) {
-		for (int i = 0; i < commandChain.length; i++) {
-            String command = commandChain[i];
-            if (command == "d") {
-            	int newHeight = height - 1;
+	public Nemo commandsForNemo(String string) {
+		for (int i = 0; i < string.length(); i++) {
+            Character command = string.charAt(i);
+            if (command == 'd') {
+            	this.height = height - 1;
             }
-            if (command == "u") {
-            	int newHeight = height + 1;
+            if (command == 'u') {
+            	this.height = height + 1;
             }
-            if (command == "l") {
-                if (command == "r") {
+            if (command == 'l') {
                 	if (direction <= 180) {
-                		int newDirection = direction + 90;}
+                		this.direction = direction + 90;}
                 	else if(direction == 270) {
-                		int newDirection = 0;}
-                	}
-            	int newDirection = direction + 90;
-            }
-            if (command == "r") {
+                		this.direction= 0;}
+             }
+            if (command == 'r') {
             	if (direction >= 90) {
-            		int newDirection = direction - 90;}
+            		this.direction = direction - 90;}
             	else if(direction == 0) {
-            		int newDirection = 270;}
+            		this.direction = 270;}
             	}
               
-            if (command == "f") {
+            if (command == 'f') {
             	if (direction == 0) {
-            		int newDistX = distX + 1;
+            		this.distX = distX + 1;
             	} 
             	if (direction == 90) {
-            		int newDistY = distY + 1;
+            		this.distY = distY + 1;
             	}
             	if (direction == 180) {
-            		int newDistX = distX - 1;
+            		this.distX = distX - 1;
             	}
             	if (direction == 270) {
-            		int newDistY = distY - 1;
+            		this.distY = distY - 1;
             	} 
         }
-            if (command == "m") {
+            if (command == 'm') {
             	//entender que significa "librar la capsula"
             	}
             }

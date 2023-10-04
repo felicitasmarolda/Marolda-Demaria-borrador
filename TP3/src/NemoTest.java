@@ -20,13 +20,20 @@ public class NemoTest {
 		Nemo nemo = new Nemo();
 	    assertEquals( Arrays.asList(0,0), nemo.getCoordinates() );
 	  }
+	
 	@Test public void test2NewNemoHasHeightZero() {
 		Nemo nemo = new Nemo();
 		assertEquals(0, nemo.getHeight());
   }
+	
 	@Test public void test3NewNemoHasDirectionZero() {
 		Nemo nemo = new Nemo();
 		assertEquals(0, nemo.getDirection());
   }
+	
+	@Test public void test4DescendsOneSpaceWithD() {
+		Nemo nemo = new Nemo();
+		assertEquals(-1, (nemo.commandsForNemo("d")).getHeight());
+  }	
 	
 }
