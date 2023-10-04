@@ -17,6 +17,7 @@ import org.junit.jupiter.api.function.Executable;
 
 public class NemoTest {
 	@Test public void test1NewNemoCoordinatesAreInOrigin() {
+		// INICIALIZACION
 		Nemo nemo = new Nemo();
 	    assertEquals( Arrays.asList(0,0), nemo.getCoordinates() );
 	  }
@@ -30,10 +31,28 @@ public class NemoTest {
 		Nemo nemo = new Nemo();
 		assertEquals(0, nemo.getDirection());
   }
-	
+	// MOVIMIENTOS BASICOS
 	@Test public void test4DescendsOneSpaceWithD() {
 		Nemo nemo = new Nemo();
 		assertEquals(-1, (nemo.commandsForNemo("d")).getHeight());
   }	
+	@Test public void test5AscendsOneSpaceWithU() {
+		Nemo nemo = new Nemo();
+		assertEquals(1, (nemo.commandsForNemo("u")).getHeight());
+  }	
+	@Test public void test6CanChangeDirectionToLeft() {
+		Nemo nemo = new Nemo();
+		assertEquals(90, (nemo.commandsForNemo("l")).getDirection());
+	}
+	@Test public void test7CanChangeDirectionToRight() {
+		Nemo nemo = new Nemo();
+		assertEquals(270, (nemo.commandsForNemo("r")).getDirection());
+	}
+	@Test public void test8MovesForward() {
+		Nemo nemo = new Nemo();
+		assertEquals(1, (nemo.commandsForNemo("f")).getDistX());
+	}
+	// FALTA M QUE NO ENTIENDO BIEN
 	
+	//MOVIMIENTOS MAS COMPLEJOS
 }
