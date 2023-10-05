@@ -25,8 +25,7 @@ public class NemoTest {
 	@Test public void test2NewNemoHasHeightZero() {
 		Nemo nemo = new Nemo();
 		assertEquals(0, nemo.getHeight());
-  }
-	
+  }	
 	@Test public void test3NewNemoHasDirectionZero() {
 		Nemo nemo = new Nemo();
 		assertEquals(0, nemo.getDirection());
@@ -34,25 +33,58 @@ public class NemoTest {
 	// MOVIMIENTOS BASICOS
 	@Test public void test4DescendsOneSpaceWithD() {
 		Nemo nemo = new Nemo();
-		assertEquals(-1, (nemo.commandsForNemo("d")).getHeight());
+		nemo.commandsForNemo("d");
+		assertEquals(-1, nemo.getHeight());
   }	
 	@Test public void test5AscendsOneSpaceWithU() {
 		Nemo nemo = new Nemo();
-		assertEquals(1, (nemo.commandsForNemo("u")).getHeight());
+		nemo.commandsForNemo("u");
+		assertEquals(1, nemo.getHeight());
   }	
 	@Test public void test6CanChangeDirectionToLeft() {
 		Nemo nemo = new Nemo();
-		assertEquals(90, (nemo.commandsForNemo("l")).getDirection());
+		nemo.commandsForNemo("l");
+		assertEquals(90, nemo.getDirection());
 	}
 	@Test public void test7CanChangeDirectionToRight() {
 		Nemo nemo = new Nemo();
-		assertEquals(270, (nemo.commandsForNemo("r")).getDirection());
+		nemo.commandsForNemo("r");
+		assertEquals(270, nemo.getDirection());
 	}
 	@Test public void test8MovesForward() {
 		Nemo nemo = new Nemo();
-		assertEquals(1, (nemo.commandsForNemo("f")).getDistX());
+		nemo.commandsForNemo("f");
+		assertEquals(1, nemo.getDistX());
 	}
 	// FALTA M QUE NO ENTIENDO BIEN
 	
 	//MOVIMIENTOS MAS COMPLEJOS
+	@Test public void test9DirectionAndMoveForward() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("rf");
+		assertEquals(0, nemo.getDistX());
+		assertEquals(-1, nemo.getDistY());
+	}
+	@Test public void test10ThreeTypesOfCommands() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("lfu");
+		assertEquals(0, nemo.getDistX());
+		assertEquals(1, nemo.getDistY());
+		assertEquals(1, nemo.getHeight());
+	}
+	@Test public void test11RepeatCommands() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("uu");
+		assertEquals(2, nemo.getHeight());
+	}	
+	@Test public void test12CanReturnToOriginWithOpositeCommands() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("uurfllfdfdrrf");
+		assertEquals(0, nemo.getHeight());
+		assertEquals(0, nemo.getDistX());
+		assertEquals(0, nemo.getDistY());
+	}
+	@Test public void testSuccesfulM() {}
+	@Test public void testUnsuccesfulM() {}
+
 }
