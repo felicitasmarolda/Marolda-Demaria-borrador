@@ -84,6 +84,14 @@ public class NemoTest {
 		assertEquals(0, nemo.getXCoord());
 		assertEquals(0, nemo.getYCoord());
 	}
+	
+	@Test public void test13CanReachExpectedPoint() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("drfddflfuff");
+		assertEquals(-2, nemo.getHeight());
+		assertEquals(3, nemo.getXCoord());
+		assertEquals(-2, nemo.getYCoord());
+	}
 	@Test public void testSuccesfulM() {}
 	@Test public void testUnsuccesfulM() {}
 
