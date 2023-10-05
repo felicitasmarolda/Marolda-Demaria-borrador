@@ -54,7 +54,7 @@ public class NemoTest {
 	@Test public void test8MovesForward() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("f");
-		assertEquals(1, nemo.getDistX());
+		assertEquals(1, nemo.getXCoord());
 	}
 	// FALTA M QUE NO ENTIENDO BIEN
 	
@@ -62,14 +62,14 @@ public class NemoTest {
 	@Test public void test9DirectionAndMoveForward() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("rf");
-		assertEquals(0, nemo.getDistX());
-		assertEquals(-1, nemo.getDistY());
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(-1, nemo.getYCoord());
 	}
 	@Test public void test10ThreeTypesOfCommands() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("lfu");
-		assertEquals(0, nemo.getDistX());
-		assertEquals(1, nemo.getDistY());
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(1, nemo.getYCoord());
 		assertEquals(1, nemo.getHeight());
 	}
 	@Test public void test11RepeatCommands() {
@@ -81,8 +81,8 @@ public class NemoTest {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("uurfllfdfdrrf");
 		assertEquals(0, nemo.getHeight());
-		assertEquals(0, nemo.getDistX());
-		assertEquals(0, nemo.getDistY());
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(0, nemo.getYCoord());
 	}
 	@Test public void testSuccesfulM() {}
 	@Test public void testUnsuccesfulM() {}

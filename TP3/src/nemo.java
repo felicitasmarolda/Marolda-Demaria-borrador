@@ -6,26 +6,26 @@ import java.util.List;
 public class Nemo {
 	
 	private int height;
-	private int distX;
-	private int distY;
+	private int xCoord;
+	private int YCoord;
 	private int direction;
 	
 	public Nemo ( int height, int distX, int distY, int direction ) {
 		this.height = height;
-		this.distX = distX;
-		this.distX = distX;
+		this.xCoord = distX;
+		this.xCoord = distX;
 		this.direction = direction;
 	}
 	
 	public Nemo () {
 	}
 	
-    public int getDistX() {
-        return distX;
+    public int getXCoord() {
+        return xCoord;
     }
 
-    public int getDistY() {
-        return distY;
+    public int getYCoord() {
+        return YCoord;
     }
     
     public int getHeight() {
@@ -38,8 +38,8 @@ public class Nemo {
     
     public List<Integer> getCoordinates() {
         List<Integer> coordinates = new ArrayList<>();
-        coordinates.add(getDistX());
-        coordinates.add(getDistY());
+        coordinates.add(getXCoord());
+        coordinates.add(getYCoord());
         return coordinates;
     }
 	
@@ -69,16 +69,16 @@ public class Nemo {
               
             if (command == 'f') {
             	if (direction == 0) {
-            		this.distX = distX + 1;
+            		this.xCoord = xCoord + 1;
             	} 
             	if (direction == 90) {
-            		this.distY = distY + 1;
+            		this.YCoord = YCoord + 1;
             	}
             	if (direction == 180) {
-            		this.distX = distX - 1;
+            		this.xCoord = xCoord - 1;
             	}
             	if (direction == 270) {
-            		this.distY = distY - 1;
+            		this.YCoord = YCoord - 1;
             	} 
         }
             if (command == 'm') {
@@ -87,5 +87,7 @@ public class Nemo {
             }
 		return this;
 	}
+	
+	// falta lo de sumergirse y salir o algo asi
 
 }
