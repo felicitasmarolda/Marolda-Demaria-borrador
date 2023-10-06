@@ -64,10 +64,16 @@ public class NemoTest {
 	@Test public void testSuccesfulM() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("m");
-		assertFalse(nemo.getCapsuleState());
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(0, nemo.getYCoord());
+		assertEquals(0, nemo.getZCoord());
+		assertEquals(0, nemo.getDirection());
 	}
 	
-	@Test public void testUnsuccesfulM() {}
+	@Test public void testUnsuccesfulM() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("ddm");
+		}
 
 	// FALTA M QUE NO ENTIENDO BIEN
 	
@@ -105,7 +111,7 @@ public class NemoTest {
 	
 	@Test public void test12CanReachExpectedPoint() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("drfddflfuff");
+		nemo.commandsForNemo("drmfddflfuff");
 		assertEquals(-2, nemo.getZCoord());
 		assertEquals(3, nemo.getXCoord());
 		assertEquals(-2, nemo.getYCoord());
