@@ -15,13 +15,23 @@ import org.junit.jupiter.api.function.Executable;
 
 
 public class NemoTest {
-	@Test public void test1NewNemoCoordinatesAreInOrigin() {
+	@Test public void test0NewNemoCoordinatesAreInOrigin() {
 		// INICIALIZACION
 		Nemo nemo = new Nemo();
-	    assertEquals( Arrays.asList(0,0), nemo.getCoordinates() );
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(0, nemo.getYCoord());
 		assertEquals(0, nemo.getHeight());
 		assertEquals(0, nemo.getDirection());
 	  }
+	@Test public void test1StaysTheSameWithEmptyCommand() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("");
+		assertEquals(0, nemo.getXCoord());
+		assertEquals(0, nemo.getYCoord());
+		assertEquals(0, nemo.getHeight());
+		assertEquals(0, nemo.getDirection());
+	}
+
 	// MOVIMIENTOS BASICOS
 	@Test public void test2DescendsOneSpaceWithD() {
 		Nemo nemo = new Nemo();

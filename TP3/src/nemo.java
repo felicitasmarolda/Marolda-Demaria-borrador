@@ -35,19 +35,15 @@ public class Nemo {
     public int getDirection() {
         return direction;
     }
-    
-    public List<Integer> getCoordinates() {
-        List<Integer> coordinates = new ArrayList<>();
-        coordinates.add(getXCoord());
-        coordinates.add(getYCoord());
-        return coordinates;
-    }
 	
-
+// subir mas de 0 te quedas en el cero
+    // falta variable capsula bolleana que diga si salio o no la cpasula, solo tirar error si estas a menos de -1
+    
 	// ver si comando perpetuado es string[] o string 
 	public Nemo commandsForNemo(String string) {
 		for (int i = 0; i < string.length(); i++) {
             Character command = string.charAt(i);
+            // PODRIAMOS HACER UNA FUNCION PARA CADA UNO DE ESTOS IFS
             if (command == 'd') {
             	this.height = height - 1;
             }
