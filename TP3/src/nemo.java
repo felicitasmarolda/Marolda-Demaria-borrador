@@ -5,17 +5,18 @@ import java.util.List;
 
 public class Nemo {
 	
-	private int height;
+	private int zCoord;
 	private int xCoord;
-	private int YCoord;
+	private int yCoord;
 	private int direction;
+	private boolean capsule;
 	
-	public Nemo ( int height, int distX, int distY, int direction ) {
-		this.height = height;
-		this.xCoord = distX;
-		this.xCoord = distX;
-		this.direction = direction;
-	}
+//	public Nemo ( int height, int distX, int distY, int direction ) {
+//		this.ZCoord = height;
+//		this.xCoord = distX;
+//		this.xCoord = distX;
+//		this.direction = direction;
+//	}
 	
 	public Nemo () {
 	}
@@ -25,16 +26,21 @@ public class Nemo {
     }
 
     public int getYCoord() {
-        return YCoord;
+        return yCoord;
     }
     
-    public int getHeight() {
-        return height;
+    public int getZCoord() {
+        return zCoord;
     }
     
     public int getDirection() {
         return direction;
     }
+    
+    public boolean getCapsuleState() {
+        return capsule;
+    }
+    
 	
 // subir mas de 0 te quedas en el cero
     // falta variable capsula bolleana que diga si salio o no la cpasula, solo tirar error si estas a menos de -1
@@ -45,22 +51,22 @@ public class Nemo {
             Character command = string.charAt(i);
             // PODRIAMOS HACER UNA FUNCION PARA CADA UNO DE ESTOS IFS
             if (command == 'd') {
-            	this.height = height - 1;
+            	this.zCoord = zCoord - 1;
             }
             if (command == 'u') {
-            	this.height = height + 1;
+            	if (this.zCoord <= -1) {
+            		this.zCoord = zCoord + 1;
+            	}
+            	else {
+            		this.zCoord = 0;
+            	}
             }
             if (command == 'l') {
-                	if (direction <= 180) {
-                		this.direction = direction + 90;}
-                	else if(direction == 270) {
-                		this.direction= 0;}
+                	direction = (direction + 90 + 360) % 360;
              }
             if (command == 'r') {
-            	if (direction >= 90) {
-            		this.direction = direction - 90;}
-            	else if(direction == 0) {
-            		this.direction = 270;}
+            		direction = (direction - 90 + 360) % 360;
+
             	}
               
             if (command == 'f') {
@@ -68,16 +74,19 @@ public class Nemo {
             		this.xCoord = xCoord + 1;
             	} 
             	if (direction == 90) {
-            		this.YCoord = YCoord + 1;
+            		this.yCoord = yCoord + 1;
             	}
             	if (direction == 180) {
             		this.xCoord = xCoord - 1;
             	}
             	if (direction == 270) {
-            		this.YCoord = YCoord - 1;
+            		this.yCoord = yCoord - 1;
             	} 
         }
             if (command == 'm') {
+            	if ( zCoord >= -1 && capsule == true) {
+            		capsule = false;
+            	}
             	//entender que significa "librar la capsula"
             	}
             }
