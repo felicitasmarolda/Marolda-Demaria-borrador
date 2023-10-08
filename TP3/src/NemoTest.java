@@ -22,7 +22,7 @@ public class NemoTest {
 		assertEquals(0, nemo.direction);
 	  }
 	
-	@Test public void test01StaysTheSameWithEmptyCommand() {
+	@Test public void test01StaysInTheSamePositionWithEmptyCommand() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("");
 		assertEquals(0, nemo.xCoord);
@@ -33,34 +33,34 @@ public class NemoTest {
 
 	@Test public void test02DescendsOneSpaceWithD() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("d");
+		nemo.commandsForNemo('d');
 		assertEquals(-1, nemo.zCoord);
   }	
 
 	@Test public void test03CanNotGoAboveTheSurfaceWithUWhenInSurface() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("u");
+		nemo.commandsForNemo('u');
 		assertEquals(0, nemo.zCoord);
 	}
 
 	@Test public void test04CanChangeDirectionToLeft() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("l");
+		nemo.commandsForNemo('l');
 		assertEquals(90, nemo.direction);
 	}
 	@Test public void test05CanChangeDirectionToRight() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("r");
+		nemo.commandsForNemo('r');
 		assertEquals(270, nemo.direction);
 	}
-	@Test public void test06MovesForward() {
+	@Test public void test06MovesForwardTowardsEast() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("f");
+		nemo.commandsForNemo('f');
 		assertEquals(1, nemo.xCoord);
 	}
 	@Test public void test07SuccesfulM() {
 		Nemo nemo = new Nemo();
-		nemo.commandsForNemo("m");
+		nemo.commandsForNemo('m');
 		assertEquals(0, nemo.xCoord);
 		assertEquals(0, nemo.yCoord);
 		assertEquals(0, nemo.zCoord);
@@ -72,25 +72,37 @@ public class NemoTest {
 		nemo.commandsForNemo("ddu");
 		assertEquals(-1, nemo.zCoord);
   }	
-	@Test public void test09DirectionAndMoveForward() {
+	@Test public void test09CanMoveSouth() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("rf");
 		assertEquals(0, nemo.xCoord);
 		assertEquals(-1, nemo.yCoord);
 	}
-	@Test public void test10ThreeTypesOfCommands() {
+	@Test public void test10CanMoveNorth() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("lf");
+		assertEquals(0, nemo.xCoord);
+		assertEquals(1, nemo.yCoord);
+	}
+	@Test public void test11CanMoveWest() {
+		Nemo nemo = new Nemo();
+		nemo.commandsForNemo("rrf");
+		assertEquals(-1, nemo.xCoord);
+		assertEquals(0, nemo.yCoord);
+	}
+	@Test public void test11ThreeTypesOfCommands() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("lfd");
 		assertEquals(0, nemo.xCoord);
 		assertEquals(1, nemo.yCoord);
 		assertEquals(-1, nemo.zCoord);
 	}
-	@Test public void test11RepeatCommands() {
+	@Test public void test12RepeatCommands() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("ff");
 		assertEquals(2, nemo.xCoord);
 	}	
-	@Test public void test12CanReturnToOriginWithOpositeCommands() {
+	@Test public void test13CanReturnToOriginWithOpositeCommands() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("rfllfdufdrruf");
 		assertEquals(0, nemo.xCoord);
@@ -98,14 +110,14 @@ public class NemoTest {
 		assertEquals(0, nemo.zCoord);
 	}
 	
-	@Test public void test13CanReachExpectedPoint() {
+	@Test public void test14CanReachExpectedPoint() {
 		Nemo nemo = new Nemo();
 		nemo.commandsForNemo("drmfddflfuff");
 		assertEquals(-2, nemo.zCoord);
 		assertEquals(3, nemo.xCoord);
 		assertEquals(-2, nemo.yCoord);
 	}
-	@Test public void test14UnsuccesfulM() {
+	@Test public void test15UnsuccesfulM() {
 		Nemo nemo = new Nemo();
 		assertEquals( "La capsula no puede ser liberada", 
 				assertThrows( Exception.class, () -> nemo.commandsForNemo("ddm"))
