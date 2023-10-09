@@ -1,98 +1,38 @@
 package nemo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Nemo {
+
+	public int zCoord;
+	public int xCoord;
+	public int yCoord;
+	public int direction;
+	public boolean capsule = true;
 	
-	private int zCoord;
-	private int xCoord;
-	private int yCoord;
-	private int direction;
-	private boolean capsule;
-	
-//	public Nemo ( int height, int distX, int distY, int direction ) {
-//		this.ZCoord = height;
-//		this.xCoord = distX;
-//		this.xCoord = distX;
-//		this.direction = direction;
-//	}
-	
-	public Nemo () {
+	private AnswererCommand finder(Character comm) {
+		Map<Character, AnswererCommand> comandos = new HashMap<>();
+		comandos.put('d', new DownSlot());
+		comandos.put('u', new UpSlot());
+		comandos.put('l', new LeftSlot());
+		comandos.put('r', new RightSlot());
+		comandos.put('f', new FrontSlot());
+		comandos.put('m', new MSlot());
+		
+		return comandos.get(comm);
 	}
 	
-    public int getXCoord() {
-        return xCoord;
-    }
-
-    public int getYCoord() {
-        return yCoord;
-    }
-    
-    public int getZCoord() {
-        return zCoord;
-    }
-    
-    public int getDirection() {
-        return direction;
-    }
-    
-    public boolean getCapsuleState() {
-        return capsule;
-    }
-    
-	
-// subir mas de 0 te quedas en el cero
-    // falta variable capsula bolleana que diga si salio o no la cpasula, solo tirar error si estas a menos de -1
-    
-	// ver si comando perpetuado es string[] o string 
-	public Nemo commandsForNemo(String string) {
+	public void commandsForNemo(String string) {
 		for (int i = 0; i < string.length(); i++) {
-            Character command = string.charAt(i);
-            // PODRIAMOS HACER UNA FUNCION PARA CADA UNO DE ESTOS IFS
-            if (command == 'd') {
-            	this.zCoord = zCoord - 1;
-            }
-            if (command == 'u') {
-            	if (this.zCoord <= -1) {
-            		this.zCoord = zCoord + 1;
-            	}
-            	else {
-            		this.zCoord = 0;
-            	}
-            }
-            if (command == 'l') {
-                	direction = (direction + 90 + 360) % 360;
-             }
-            if (command == 'r') {
-            		direction = (direction - 90 + 360) % 360;
-
-            	}
-              
-            if (command == 'f') {
-            	if (direction == 0) {
-            		this.xCoord = xCoord + 1;
-            	} 
-            	if (direction == 90) {
-            		this.yCoord = yCoord + 1;
-            	}
-            	if (direction == 180) {
-            		this.xCoord = xCoord - 1;
-            	}
-            	if (direction == 270) {
-            		this.yCoord = yCoord - 1;
-            	} 
-        }
-            if (command == 'm') {
-            	if ( zCoord >= -1 && capsule == true) {
-            		capsule = false;
-            	}
-            	//entender que significa "librar la capsula"
-            	}
-            }
-		return this;
+			Character command = string.charAt(i);
+			commandsForNemo(command);
+		}
 	}
 	
-	// falta lo de sumergirse y salir o algo asi
-
+	public void commandsForNemo(Character command) {
+		finder(command).commandsForNemoPolymorfic(this);
+	}
 }
