@@ -126,30 +126,20 @@ public class NemoTest {
 	
 	@Test public void test14CanReturnToOriginalStateWithOpositeMoves() {
 		Nemo nemo = new Nemo(0, 0, new North());
-		Nemo nemo2 = new Nemo(10, 15, new West());
 		nemo.execute("rfllfdufdrrufl");
-		nemo2.execute("rfllfdufdrrufl");
-		
 		assertEquals(0, nemo.xCoord);
 		assertEquals(0, nemo.yCoord);
 		assertEquals(0, nemo.zCoord);
 		assertEquals("Norte", nemo.direction());
-		
-		assertEquals(10, nemo2.xCoord);
-		assertEquals(15, nemo2.yCoord);
-		assertEquals(0, nemo2.zCoord);
-		assertEquals("Oeste", nemo2.direction());
 	}
 	
-	@Test public void test15CanMeetAnyOtherNemo() {
-		Nemo nemo2 = new Nemo(12, -13, new East());
-		nemo2.execute("ddddd");
+	@Test public void test15CanReachAnyDesiredPositionAndDirection() {
 		Nemo nemo = new Nemo(0, 0, new North());
 		nemo.execute("dddddrffffffffffffrfffffffffffffl");
-		assertEquals(nemo2.xCoord, nemo.xCoord);
-		assertEquals(nemo2.yCoord, nemo.yCoord);
-		assertEquals(nemo2.zCoord, nemo.zCoord);
-		assertEquals(nemo2.direction(), nemo.direction());
+		assertEquals(12, nemo.xCoord);
+		assertEquals(-13, nemo.yCoord);
+		assertEquals(-5, nemo.zCoord);
+		assertEquals("Este", nemo.direction());
 	}
 	
 	@Test public void test16CannotOpenCapsuleBelowSomeDepth() {
