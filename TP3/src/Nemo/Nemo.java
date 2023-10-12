@@ -34,16 +34,18 @@ public class Nemo {
 		return capsule.capsula();
 	}
 
-	public void execute(String string) {
+	public void executeNemoCommand( String string ) {
 		for (int i = 0; i < string.length(); i++) {
 			Character command = string.charAt(i);
-			this.execute(command);           
+			this.executeNemoCommand(command);           
 		}
 	}
 	
-	public void execute( Character command ) {
+	public void executeNemoCommand( Character command ) {
 		Instruccion passedCommand = new Instruccion(command);
-		Stream<Comando> commands = comandos.stream().filter(comm -> comm.value() == passedCommand.value);
+		Stream<Comando> commands = comandos.stream()
+				.filter(comm -> 
+						comm.value() == passedCommand.value);
 		List<Comando> filteredCommand = commands.collect(Collectors.toList());
 		Comando comando = filteredCommand.get(0);
 		comando.executeSpecific(this);
