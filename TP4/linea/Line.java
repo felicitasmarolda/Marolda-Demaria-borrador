@@ -77,9 +77,20 @@ public class Line {
 
         public void playBlueAt( int position ) {
 
-            if (position < 0 || position >= this.base) {
+            if ( position < 0 || position >= this.base ) {
 
-                throw new RuntimeException("Pos");
+                throw new RuntimeException( "Posición incorrecta" );
+
             }
+
+            if ( this.tablero[0][position] != ' ' ) {
+
+                throw new RuntimeException( "Posición ocupada" );
+
+            }
+
+            this.tablero[0][position] = 'X';
+            this.blancas++;
+
         }
 }
