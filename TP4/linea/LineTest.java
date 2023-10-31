@@ -25,4 +25,5 @@ public class LineTest {
         String expected = " C \n   \n   \n";
         assertEquals( expected, line.show() );
     }
+    // prueba
 }
