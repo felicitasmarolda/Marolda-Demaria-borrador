@@ -92,5 +92,6 @@ public class Line {
             this.tablero[0][position] = 'X';
             this.blancas++;
 
-        }
+        }// fijarse lo del uso de "tablero"
+    // crear lista de listas y ver como afecta cuando agregas una ficha
 }
