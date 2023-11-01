@@ -3,26 +3,26 @@ package juego.linea;
 public class Line {
 
         private int base;
-        private int altura;
-        private char[][] tablero;
-        private int negras;
-        private int blancas;
-        private int turno;
+        private int height;
+        private char[][] board;
+        private int red;
+        private int blue;
+        private int turn;
 
         public Line(int base, int altura, char turno ) {
 
             this.base = base;
-            this.altura = altura;
-            this.tablero = new char[altura][base];
-            this.negras = 0;
-            this.blancas = 0;
-            this.turno = turno;
+            this.height = altura;
+            this.board = new char[altura][base];
+            this.red = 0;
+            this.blue = 0;
+            this.turn = turn;
 
             for ( int i = 0; i < altura; i++ ) {
 
                 for ( int j = 0; j < base; j++ ) {
 
-                    this.tablero[i][j] = ' ';
+                    this.board[i][j] = ' ';
 
                 }
 
@@ -34,11 +34,11 @@ public class Line {
 
             String result = "";
 
-            for ( int i = 0; i < this.altura; i++ ) {
+            for ( int i = 0; i < this.height; i++ ) {
 
                 for ( int j = 0; j < this.base; j++ ) {
 
-                    result += this.tablero[i][j];
+                    result += this.board[i][j];
 
                 }
 
@@ -52,7 +52,7 @@ public class Line {
 
         public boolean finished() {
 
-            return this.negras + this.blancas == this.base * this.altura;
+            return this.red + this.blue == this.base * this.height;
 
         }
 
@@ -60,18 +60,18 @@ public class Line {
 
             if ( position < 0 || position >= this.base ) {
 
-                throw new RuntimeException( "Posición incorrecta" );
+                throw new RuntimeException( "Incorrect position" );
 
             }
 
-            if ( this.tablero[0][position] != ' ' ) {
+            if ( this.board[0][position] != ' ' ) {
 
-                throw new RuntimeException( "Posición ocupada" );
+                throw new RuntimeException( "Occupied position" );
 
             }
 
-            this.tablero[0][position] = 'X';
-            this.negras++;
+            this.board[0][position] = 'X';
+            this.red++;
 
         }
 
@@ -79,18 +79,19 @@ public class Line {
 
             if ( position < 0 || position >= this.base ) {
 
-                throw new RuntimeException( "Posición incorrecta" );
+                throw new RuntimeException( "Incorrect position" );
 
             }
 
-            if ( this.tablero[0][position] != ' ' ) {
+            if ( this.board[0][position] != ' ' ) {
 
-                throw new RuntimeException( "Posición ocupada" );
+                throw new RuntimeException( "Occupied position" );
 
             }
 
-            this.tablero[0][position] = 'X';
-            this.blancas++;
+            this.board[0][position] = 'X';
+            this.blue++;
 
-        }
+        }// fijarse lo del uso de "tablero"
+    // crear lista de listas y ver como afecta cuando agregas una ficha
 }
