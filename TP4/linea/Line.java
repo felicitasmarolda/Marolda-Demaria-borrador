@@ -91,8 +91,6 @@ public class Line {
 
             this.tablero[0][position] = 'X';
             this.blancas++;
-        }
 
-    // mirar lo de usar la palabra "tablero"
-    // crear lista de listas y agregar a play blue y red que pasa cuando ponen bien
-}//
+        }
+}
