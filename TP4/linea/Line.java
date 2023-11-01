@@ -79,7 +79,15 @@ public class Line {
 
             if (position < 0 || position >= this.base) {
 
-                throw new RuntimeException("Pos");
+                throw new RuntimeException("Posición incorrecta");
+            }
+
+            if (this.tablero[0][position] != ' ') {
+
+                throw new RuntimeException("Posición ocupada");
             }
         }
+
+    // mirar lo de usar la palabra "tablero"
+    // crear lista de listas y agregar a play blue y red que pasa cuando ponen bien
 }

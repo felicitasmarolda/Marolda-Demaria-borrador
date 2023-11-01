@@ -12,18 +12,20 @@ public class LineTest {
         assertEquals( expected, line.show() );
     }
 
-    @Test public void test01RedPlaysShownInBoard(){
+    @Test public void test01RedPlaysCorrectlyAndShown(){
         Line line = new Line( 3, 3, 'C' );
         line.playRedAt( 1 );
         String expected = " C \n   \n   \n";
         assertEquals( expected, line.show() );
     }
 
-    @Test public void test02BluePlaysShownInBoard(){
+    @Test public void test02BluePlaysCorrectlyAndShownInBoard(){
         Line line = new Line( 3, 3, 'C' );
         line.playBlueAt( 1 );
         String expected = " C \n   \n   \n";
         assertEquals( expected, line.show() );
     }
-    // prueba
+
+    // pregunto que hay en una coordenada
+    // tipo columna
 }
