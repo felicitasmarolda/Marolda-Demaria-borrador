@@ -77,6 +77,7 @@ public class Line {
                 columnList.add('R');
                 this.red += 1;
                 turnHistory.add('R');
+                searchForTriumph(column, board.get(column).size()-1, 'R');
             } else {
                 throw new RuntimeException( "Column is complete" );
             }
@@ -104,6 +105,134 @@ public class Line {
                 throw new RuntimeException( "Column is complete" );
             }
 
-        }// fijarse lo del uso de "tablero"
-    // crear lista de listas y ver como afecta cuando agregas una ficha
+        }
+
+        public ArrayList<Character> getHorizontalLine(int height) {
+            ArrayList<Character> horizontalLine = new ArrayList<Character>();
+            for (int i = 0; i < this.base; i++) {
+                if (this.board.get(i).size() >= height) {
+                    horizontalLine.add(this.board.get(i).get(height));
+                }
+                else{
+                    horizontalLine.add(' ');
+                }
+            }
+            return horizontalLine;
+        }
+
+        public ArrayList<Character> getDiagonalLine1(int heightY, int baseX){
+            ArrayList<Character> diagonalLine = new ArrayList<Character>();
+            int countY1 = heightY;
+            int countX1 = baseX;
+            while (countX1 < this.base && countY1 < this.height){
+                if (this.board.get(countX1).size() >= height) {
+                    diagonalLine.add(this.board.get(countX1).get(countY1));
+                }
+                else{
+                    diagonalLine.add(' ');
+                }
+                countX1 += 1;
+                countY1 += 1;
+            }
+            int countY2 = heightY;
+            int countX2 = baseX;
+            while (countX2 > 0 && countY2 > 0){
+                if (this.board.get(countX2).size() >= height) {
+                    diagonalLine.add(this.board.get(countX2).get(countY2));
+                }
+                else{
+                    diagonalLine.add(' ');
+                }
+                countX2 -= 1;
+                countY2 -= 1;
+            }
+            return diagonalLine;
+        }
+
+        public ArrayList<Character> getDiagonalLine2(int heightY, int baseX){
+            ArrayList<Character> diagonalLine = new ArrayList<Character>();
+            int countY1 = heightY;
+            int countX1 = baseX;
+            while (countX1 < this.base && countY1 > 0){
+                if (this.board.get(countX1).size() >= height) {
+                    diagonalLine.add(this.board.get(countX1).get(countY1));
+                }
+                else{
+                    diagonalLine.add(' ');
+                }
+                countX1 += 1;
+                countY1 -= 1;
+            }
+            int countY2 = heightY;
+            int countX2 = baseX;
+            while (countX2 > 0 && countY2 < this.height){
+                if (this.board.get(countX2).size() >= height) {
+                    diagonalLine.add(this.board.get(countX2).get(countY2));
+                }
+                else{
+                    diagonalLine.add(' ');
+                }
+                countX2 -= 1;
+                countY2 += 1;
+            }
+            return diagonalLine;
+        }
+
+        public boolean searchForTriumph(int columnX, int heightY, char player) {
+            ArrayList<Character> horizontalLine = getHorizontalLine(heightY);
+            int counter = 0;
+            // horizontal
+            for (char c : horizontalLine) {
+                if (c == player) {
+                    counter += 1;
+                } else {
+                    counter = 0;
+                }
+                ;
+                if (counter == 4) {
+                    return true;
+                }
+            }
+            // vertical
+            for (char c : this.board.get(columnX)) {
+                if (c == player) {
+                    counter += 1;
+                } else {
+                    counter = 0;
+                }
+                ;
+                if (counter == 4) {
+                    return true;
+                }
+            }
+            //diagonal
+            ArrayList<Character> diagonalLine1 = getDiagonalLine1(heightY, columnX);
+            for (char c : diagonalLine1) {
+                if (c == player) {
+                    counter += 1;
+                } else {
+                    counter = 0;
+                }
+                ;
+                if (counter == 4) {
+                    return true;
+                }
+            }
+            ArrayList<Character> diagonalLine2 = getDiagonalLine2(heightY, columnX);
+            for (char c : diagonalLine2) {
+                if (c == player) {
+                    counter += 1;
+                } else {
+                    counter = 0;
+                }
+                ;
+                if (counter == 4) {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
 }
