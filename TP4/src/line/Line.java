@@ -14,7 +14,7 @@ public class Line {
         private char turn;
         private ArrayList<Character> turnHistory;
 
-        public Line(int base, int height, char turno ) {
+        public Line(int base, int height, char turn ) {
 
             this.base = base;
             this.height = height;
@@ -59,7 +59,7 @@ public class Line {
 
         public void playRedAt( int column ) {
             if (this.red > 1){
-                if (turnHistory.get(turnHistory.size() - 1) == 'R') {
+                if (!turnHistory.isEmpty() && turnHistory.get(turnHistory.size() - 1) == 'R') {
                     throw new RuntimeException( "Same player can not play two times in a row" );
             }
             }
@@ -71,22 +71,27 @@ public class Line {
             if (columnList.isEmpty()) {
                 columnList.add('R');
                 this.red += 1;
+                turnHistory.add('R');
             }
 
             else if (columnList.size() < height) {
                 columnList.add('R');
                 this.red += 1;
                 turnHistory.add('R');
-                searchForTriumph(column, board.get(column).size()-1, 'R');
+                if (searchForTriumph(column, board.get(column).size()-1, 'R')){
+                    throw new RuntimeException( "Red player won" );
+                }
             } else {
                 throw new RuntimeException( "Column is complete" );
             }
         }
 
         public void playBlueAt( int column ) {
+            if (turnHistory.size() > 1) {
                 if (!turnHistory.isEmpty() && turnHistory.get(turnHistory.size() - 1) == 'B') {
-                    throw new RuntimeException( "Same player can not play two times in a row" );
+                    throw new RuntimeException("Same player can not play two times in a row");
                 }
+            }
             if ( column  < 0 || column >= this.base ) {
                 throw new RuntimeException( "Incorrect column" );
             }
@@ -95,25 +100,29 @@ public class Line {
             if (columnList.isEmpty()) {
                 columnList.add('B');
                 this.blue += 1;
+                turnHistory.add('B');
             }
 
             else if (columnList.size() < height) {
                 columnList.add('B');
                 this.blue += 1;
                 turnHistory.add('B');
+                if (searchForTriumph(column, board.get(column).size()-1, 'B')){
+                    throw new RuntimeException( "Blue player won" );
+                }
             } else {
                 throw new RuntimeException( "Column is complete" );
             }
 
         }
 
-        public ArrayList<Character> getHorizontalLine(int height) {
+        public ArrayList<Character> getHorizontalLine(int heightY) {
             ArrayList<Character> horizontalLine = new ArrayList<Character>();
             for (int i = 0; i < this.base; i++) {
-                if (this.board.get(i).size() >= height) {
-                    horizontalLine.add(this.board.get(i).get(height));
-                }
-                else{
+                ArrayList<Character> columnList = this.board.get(i);
+                if (columnList.size() > heightY) {
+                    horizontalLine.add(columnList.get(heightY));
+                } else {
                     horizontalLine.add(' ');
                 }
             }
@@ -225,7 +234,6 @@ public class Line {
                 } else {
                     counter = 0;
                 }
-                ;
                 if (counter == 4) {
                     return true;
                 }

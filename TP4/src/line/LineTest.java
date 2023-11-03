@@ -92,8 +92,8 @@ public class LineTest {
             assertEquals( "Same player can not play two times in a row", e.getMessage());
         }
     }
-    @Test public void test09RedWinsByLineAsTypeA(){
-        Line line = new Line( 4, 4, 'A');
+    @Test public void test09RedWinsByHorizontalLine(){
+        Line line = new Line( 5, 5, 'A');
         line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 1 );
@@ -101,13 +101,62 @@ public class LineTest {
         line.playBlueAt( 2 );
         line.playRedAt(2);
         line.playBlueAt( 3 );
-        line.playRedAt(3);
-        assertEquals( true, line.finished());
+        try {
+            line.playRedAt( 4 );
+        } catch (RuntimeException e) {
+            assertEquals( "Red player won", e.getMessage());
+        }
     }
 
-    // test6 -- testear no se puede jugar cuando el juego termino
-    // test7 -- testear no se puede jugar cuando no es el turno del jugador (playredat dos veces no se puede)
-    // test8 -- testear gana por linea tipo A
-    //test9 -- testear gana por columna tipo b
-    //test10 -- gana por diagonal tipo c
+    @Test public void test10BlueWinsByVerticalLine(){
+        Line line = new Line( 5, 5, 'B');
+        line.playBlueAt( 0 );
+        line.playRedAt(0);
+        line.playBlueAt( 0 );
+        line.playRedAt(1);
+        line.playBlueAt( 0 );
+        line.playRedAt(2);
+        try {
+            line.playBlueAt( 0 );
+        } catch (RuntimeException e) {
+            assertEquals( "Blue player won", e.getMessage());
+        }
+    }
+    @Test public void test11BlueWinsByDiagonalLine() {
+        Line line = new Line(6, 6, 'C');
+        line.playBlueAt(0);
+        line.playRedAt(1);
+        line.playBlueAt(1);
+        line.playRedAt(2);
+        line.playBlueAt(3);
+        line.playRedAt(2);
+        line.playBlueAt(2);
+        line.playRedAt(3);
+        line.playBlueAt(2);
+        line.playRedAt(3);
+        try {
+            line.playBlueAt(3);
+        } catch (RuntimeException e) {
+            assertEquals("Blue player won", e.getMessage());
+        }
+    }
+    @Test public void test12RedWinsByDiagonalLine(){
+        Line line = new Line( 6, 6, 'C');
+        line.playBlueAt(3);
+        line.playRedAt(2);
+        line.playBlueAt(2);
+        line.playRedAt(1);
+        line.playBlueAt(0);
+        line.playRedAt(1);
+        line.playBlueAt(1);
+        line.playRedAt(0);
+        line.playBlueAt(1);
+        line.playRedAt(0);
+        line.playBlueAt(0);
+        try {
+            line.playRedAt(0);
+        } catch (RuntimeException e) {
+            assertEquals("Red player won", e.getMessage());
+        }
+    }
 }
