@@ -1,160 +1,154 @@
 package nemo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
 
 public class NemoTest {
 	
 	@Test public void test00CanPlaceNewNemoAnywherePointingToWhereDesired() {
-		Nemo nemo = new Nemo(1, 2, new South());
-		assertEquals(1, nemo.xCoord);
-		assertEquals(2, nemo.yCoord);
-		assertEquals(0, nemo.zCoord);
-		assertEquals("Sur", nemo.direction());
+		assertCoordinates(new Nemo(1, 2, new South()), 1, 2, 0);
+		assertCardinalDirection(new Nemo(1, 2, new South()), "Sur");
 	}
 	
 	@Test public void test01IgnoresEmptyCommand() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand("");
-		assertEquals(0, nemo.xCoord);
-		assertEquals(0, nemo.yCoord);
-		assertEquals(0, nemo.zCoord);
-		assertEquals("Norte", nemo.direction());
+		nemoIsInOrigin(nemoWithCommandInFormOfString(""));
+		assertCardinalDirection(nemoWithCommandInFormOfString(""), "Norte");
 	}
 
 	@Test public void test02DescendsOneUnit() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('d');
-		assertEquals(-1, nemo.zCoord);
+		assertSpecificCoordinate(-1, nemoWithCommandInFormOfCharacter('d').zCoord);
     }	
 
 	@Test public void test03AscendsOneUnit() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('d');
-		nemo.executeNemoCommand('u');
-		assertEquals(0, nemo.zCoord);
+		assertSpecificCoordinate(0, nemoWithCommandInFormOfCharacter('u').zCoord);
 	}
 	
 	@Test public void test04CannotAscendWhenInSurface() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('u');
-		assertEquals(0, nemo.zCoord);
+		assertSpecificCoordinate(0, nemoWithCommandInFormOfCharacter('u').zCoord);
 	}
 
 	@Test public void test05OpensCapsule() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('m');
-		assertTrue(nemo.capsule());
+		assertTrue(nemoWithCommandInFormOfCharacter('m').capsule());
 	}
 	
 	@Test public void test06TurnsLeftNinetyDegrees() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('l');
-		assertEquals("Oeste", nemo.direction());
+		assertCardinalDirection(nemoWithCommandInFormOfCharacter('l'), "Oeste");
 	}
 	
 	@Test public void test07TurnsRightNinetyDegrees() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('r');
-		assertEquals("Este", nemo.direction());
+		assertCardinalDirection(nemoWithCommandInFormOfCharacter('r'), "Este");
 	}
 	
 	@Test public void test08MovesForward() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('f');
-		assertEquals(1, nemo.yCoord);
+		assertSpecificCoordinate(1, nemoWithCommandInFormOfCharacter('f').yCoord);
 	}
 	
 	@Test public void test09CanPointToAnyDirectionByTurningLeft() {
 		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('l');
-		assertEquals("Oeste", nemo.direction());
-		nemo.executeNemoCommand('l');
-		assertEquals("Sur", nemo.direction());
-		nemo.executeNemoCommand('l');
-		assertEquals("Este", nemo.direction());
-		nemo.executeNemoCommand('l');
-		assertEquals("Norte", nemo.direction());
-	}
+		nemoCanPointToAnyDirection(nemo, "Oeste", "Sur", "Este", "Norte", "l", "l", nemo.direction());
+		}
 	
 	@Test public void test10CanPointToAnyDirectionByTurningRight() {
 		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('r');
-		assertEquals("Este", nemo.direction());
-		nemo.executeNemoCommand('r');
-		assertEquals("Sur", nemo.direction());
-		nemo.executeNemoCommand('r');
-		assertEquals("Oeste", nemo.direction());
-		nemo.executeNemoCommand('r');
-		assertEquals("Norte", nemo.direction());
+		nemoCanPointToAnyDirection(new Nemo(0, 0, new North()), "Este", "Sur", "Oeste", "Norte", "r", "r", nemo.direction());
 	}
 	
 	@Test public void test11AllowsStringsRepresentingCommandChains() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand("fm");
-		assertEquals(1, nemo.yCoord);
-		assertTrue(nemo.capsule());
+		assertSpecificCoordinate(1, nemoWithCommandInFormOfString("fm").yCoord);
+		assertTrue(nemoWithCommandInFormOfString("fm").capsule());
 	}
 	
 	@Test public void test12CanRepeatCommands() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand("ffff");
-		assertEquals(4, nemo.yCoord);
+		assertSpecificCoordinate(4, nemoWithCommandInFormOfString("ffff").yCoord);
 	}
 	
 	@Test public void test13CanAdvanceOnAnyDirection() {
 		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand('f');
-		assertEquals(1, nemo.yCoord);
-		nemo.executeNemoCommand("rf");
-		assertEquals(1, nemo.xCoord);
-		nemo.executeNemoCommand("rf");
-		assertEquals(0, nemo.yCoord);
-		nemo.executeNemoCommand("rf");
-		assertEquals(0, nemo.xCoord);
+		Object val1 = 1;
+		Object val2 = 1;
+		Object val3 = 0;
+		Object val4 = 0;
+		String command1 = "f";
+		String commandOthers = "rf";
+		Object coord1 = nemo.yCoord;
+		Object coord2 = nemo.xCoord;
+		
+		nemoCanPointToAnyDirection(nemo, "Este", "Sur", "Oeste", "Norte", "r", "r", nemo.direction());
+		
+		nemo.executeNemoCommand(command1);
+		assertEquals(val1, nemo.yCoord);
+		nemo.executeNemoCommand(commandOthers);
+		assertEquals(val2, nemo.xCoord);
+		nemo.executeNemoCommand(commandOthers);
+		assertEquals(val3, nemo.yCoord);
+		nemo.executeNemoCommand(commandOthers);
+		assertEquals(val4, nemo.xCoord);
 	}
 	
 	@Test public void test14CanReturnToOriginalStateWithOpositeMoves() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand("rfllfdufdrrufl");
-		assertEquals(0, nemo.xCoord);
-		assertEquals(0, nemo.yCoord);
-		assertEquals(0, nemo.zCoord);
-		assertEquals("Norte", nemo.direction());
+		assertEquals("Norte", nemoWithCommandInFormOfString("rfllfdufdrrufl").direction());
 	}
 	
 	@Test public void test15CanReachAnyDesiredPositionAndDirection() {
-		Nemo nemo = new Nemo(0, 0, new North());
-		nemo.executeNemoCommand("dddddrffffffffffffrfffffffffffffl");
-		assertEquals(12, nemo.xCoord);
-		assertEquals(-13, nemo.yCoord);
-		assertEquals(-5, nemo.zCoord);
-		assertEquals("Este", nemo.direction());
+		assertCoordinates(nemoWithCommandInFormOfString("dddddrffffffffffffrfffffffffffffl"), 12, -13, -5);
+		assertEquals("Este", nemoWithCommandInFormOfString("dddddrffffffffffffrfffffffffffffl").direction());
 	}
 	
 	@Test public void test16CannotOpenCapsuleBelowSomeDepth() {
-		Nemo nemo = new Nemo(0, 0, new North());
 		assertEquals( "La capsula no puede ser liberada", 
-				assertThrows( Exception.class, () -> nemo.executeNemoCommand("ddm"))
+				assertThrows( Exception.class, () -> new Nemo(0, 0, new North()).executeNemoCommand("ddm"))
 				.getMessage());
 	}
 	
 	@Test public void test17CannotOpenAlreadyOpenedCapsule() {
-		Nemo nemo = new Nemo(0, 0, new North());
 		assertEquals( "La capsula no puede ser liberada", 
-				assertThrows( Exception.class, () -> nemo.executeNemoCommand("mm"))
+				assertThrows( Exception.class, () -> new Nemo(0, 0, new North()).executeNemoCommand("mm"))
 				.getMessage());
 	}
+	
+
+	private void assertCoordinates(Nemo nemo, int x, int y, int z) {
+		assertEquals(x, nemo.xCoord);
+		assertEquals(y, nemo.yCoord);
+		assertEquals(z, nemo.zCoord);
+	}
+
+	private void nemoIsInOrigin(Nemo nemo) {
+		assertCoordinates(nemo, 0, 0, 0);
+	}
+
+	private void nemoCanPointToAnyDirection(Nemo nemo, Object cardinal1, Object cardinal2, Object cardinal3, Object cardinal4,
+			String command1, String command2, Object atributo) {
+		nemo.executeNemoCommand(command1);
+		assertEquals(cardinal1, atributo);
+		nemo.executeNemoCommand(command2);
+		assertEquals(cardinal2, atributo);
+		nemo.executeNemoCommand(command2);
+		assertEquals(cardinal3, atributo);
+		nemo.executeNemoCommand(command2);
+		assertEquals(cardinal4, atributo);
+	}
+
+	private Nemo nemoWithCommandInFormOfCharacter(Character commandToExecute) {
+		Nemo nemo = new Nemo(0, 0, new North());
+		nemo.executeNemoCommand(commandToExecute);
+		return nemo;
+	}
+
+	private Nemo nemoWithCommandInFormOfString(String commandToExecute) {
+		Nemo nemo = new Nemo(0, 0, new North());
+		nemo.executeNemoCommand(commandToExecute);
+		return nemo;
+	}
+
+	private void assertSpecificCoordinate(int value, int coord) {
+		assertEquals(value, coord);
+	}
+
+	private void assertCardinalDirection(Nemo nemo, String cardinal) {
+		assertEquals(cardinal, nemo.direction());
+	}
 }
-
-

@@ -12,19 +12,21 @@ public class Nemo {
 	public int zCoord;
 	public Cardinal direction;
 	public Capsule capsule = new ClosedCapsule();
-	List<Comando> comandos = new ArrayList<>();
+	List<Command> commands = new ArrayList<>();
 	
 	public Nemo(int x, int y, Cardinal direc) {
 		xCoord = x;
 		yCoord = y;
 		direction = direc;
-		comandos.add(new Up());
-		comandos.add(new Down());
-		comandos.add(new Forward());
-		comandos.add(new Left());
-		comandos.add(new Right());
-		comandos.add(new Open());
+		commands.add(new Up());
+		commands.add(new Down());
+		commands.add(new Forward());
+		commands.add(new Left());
+		commands.add(new Right());
+		commands.add(new Open());
 	}
+//	public Nemo() {
+//	}
 	
 	public String direction() {
 		return direction.direccion();
@@ -43,11 +45,11 @@ public class Nemo {
 	
 	public void executeNemoCommand( Character command ) {
 		Instruccion passedCommand = new Instruccion(command);
-		Stream<Comando> commands = comandos.stream()
+		Stream<Command> commandsInStream = commands.stream()
 				.filter(comm -> 
 						comm.value() == passedCommand.value);
-		List<Comando> filteredCommand = commands.collect(Collectors.toList());
-		Comando comando = filteredCommand.get(0);
+		List<Command> filteredCommand = commandsInStream.collect(Collectors.toList());
+		Command comando = filteredCommand.get(0);
 		comando.executeSpecific(this);
 	}
 }
