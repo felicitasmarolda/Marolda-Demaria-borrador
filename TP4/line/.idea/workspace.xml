@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="da66198b-a97e-40ad-af1e-864c26c43612" name="Changes" comment="comentarios">
+      <change beforePath="$PROJECT_DIR$/../linea/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/Line.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/LineTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../linea/line.iml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;felicitasmarolda&quot;
+  }
+}</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="5769ef6d-95a0-439b-8d07-22efef03f44b" />
+        <option name="url" value="https://github.com/felicitasmarolda/Marolda-Demaria-borrador.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Line.java" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2XXOP6LB1KOOyk1O5sYFjgHsneK" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feli-branch",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/felic/git/Marolda-Demaria-borrador/TP4/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="JUnit.LineTest.test01RedPlaysCorrectlyAndShown">
+    <configuration name="LineTest.test00CreatedLineIsEmpty" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="line" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="juego.linea.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="juego.linea" />
+      <option name="MAIN_CLASS_NAME" value="juego.linea.LineTest" />
+      <option name="METHOD_NAME" value="test00CreatedLineIsEmpty" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LineTest.test01RedPlaysCorrectlyAndShown" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="line" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="juego.linea.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="juego.linea" />
+      <option name="MAIN_CLASS_NAME" value="juego.linea.LineTest" />
+      <option name="METHOD_NAME" value="test01RedPlaysCorrectlyAndShown" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.LineTest.test01RedPlaysCorrectlyAndShown" />
+        <item itemvalue="JUnit.LineTest.test00CreatedLineIsEmpty" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="da66198b-a97e-40ad-af1e-864c26c43612" name="Changes" comment="" />
+      <created>1698771930518</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698771930518</updated>
+      <workItem from="1698771931568" duration="1507000" />
+      <workItem from="1698780920193" duration="1491000" />
+      <workItem from="1698854382495" duration="2238000" />
+      <workItem from="1698858460931" duration="1069000" />
+      <workItem from="1698866364643" duration="95000" />
+      <workItem from="1698866561938" duration="4501000" />
+      <workItem from="1699019938868" duration="229000" />
+      <workItem from="1699025703836" duration="280000" />
+    </task>
+    <task id="LOCAL-00001" summary="minimo">
+      <option name="closed" value="true" />
+      <created>1698772423491</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698772423491</updated>
+    </task>
+    <task id="LOCAL-00002" summary="inicializar">
+      <option name="closed" value="true" />
+      <created>1698772609852</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698772609852</updated>
+    </task>
+    <task id="LOCAL-00003" summary="inicializar">
+      <option name="closed" value="true" />
+      <created>1698772673421</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698772673421</updated>
+    </task>
+    <task id="LOCAL-00004" summary="inicializar">
+      <option name="closed" value="true" />
+      <created>1698855356212</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698855356212</updated>
+    </task>
+    <task id="LOCAL-00005" summary="comentarios">
+      <option name="closed" value="true" />
+      <created>1698855410697</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698855410697</updated>
+    </task>
+    <task id="LOCAL-00006" summary="comentarios">
+      <option name="closed" value="true" />
+      <created>1698855778477</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698855778477</updated>
+    </task>
+    <task id="LOCAL-00007" summary="comentarios">
+      <option name="closed" value="true" />
+      <created>1698855864955</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698855864955</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feli-branch" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="minimo" />
+    <MESSAGE value="inicializar" />
+    <MESSAGE value="comentarios" />
+    <option name="LAST_COMMIT_MESSAGE" value="comentarios" />
+  </component>
+</project>
