@@ -77,7 +77,6 @@ public class Line {
                 columnList.add('R');
                 this.red += 1;
                 turnHistory.add('R');
-                possibleTriumph(board, column, column.size()-1);
             } else {
                 throw new RuntimeException( "Column is complete" );
             }
