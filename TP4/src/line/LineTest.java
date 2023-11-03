@@ -35,39 +35,38 @@ public class LineTest {
     }
     @Test public void test04GameEndsWhenBoardFull(){
         Line line = new Line( 3, 2, 'C');
-        line.playBlueAt( 0 );
         line.playRedAt(0);
-        line.playBlueAt( 1 );
+        line.playBlueAt( 0 );
         line.playRedAt(1);
-        line.playBlueAt( 2 );
+        line.playBlueAt( 1 );
         line.playRedAt(2);
+        line.playBlueAt( 2 );
         assertEquals( true, line.finished());
     }
     @Test public void test05CantPlayInNonExistentColumn(){
         Line line = new Line( 3, 2, 'C');
         try {
-            line.playBlueAt( 3 );
+            line.playRedAt( 3 );
         } catch (RuntimeException e) {
             assertEquals( "Incorrect column", e.getMessage());
         }
     }
     @Test public void test06CantPlayInFullColumn(){
         Line line = new Line( 3, 6, 'C');
-        line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 0 );
         line.playRedAt(0);
+        line.playBlueAt( 0 );
         try {
-            line.playBlueAt( 0 );
+            line.playRedAt( 0 );
         } catch (RuntimeException e) {
             assertEquals( "Column is complete", e.getMessage());
         }
     }
     @Test public void test07RedCanNotPlayTwoTimesInARow(){
         Line line = new Line( 4, 4, 'C');
-        line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 0 );
         line.playRedAt(1);
@@ -81,7 +80,6 @@ public class LineTest {
     }
     @Test public void test08BlueCanNotPlayTwoTimesInARow(){
         Line line = new Line( 4, 4, 'C');
-        line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 1 );
         line.playRedAt(1);
@@ -94,15 +92,14 @@ public class LineTest {
     }
     @Test public void test09RedWinsByHorizontalLine(){
         Line line = new Line( 5, 5, 'A');
-        line.playBlueAt( 0 );
         line.playRedAt(0);
-        line.playBlueAt( 1 );
+        line.playBlueAt( 0 );
         line.playRedAt(1);
-        line.playBlueAt( 2 );
+        line.playBlueAt( 1 );
         line.playRedAt(2);
-        line.playBlueAt( 3 );
+        line.playBlueAt( 2 );
         try {
-            line.playRedAt( 4 );
+            line.playRedAt( 3 );
         } catch (RuntimeException e) {
             assertEquals( "Red player won", e.getMessage());
         }
@@ -110,6 +107,7 @@ public class LineTest {
 
     @Test public void test10BlueWinsByVerticalLine(){
         Line line = new Line( 5, 5, 'B');
+        line.playRedAt(4);
         line.playBlueAt( 0 );
         line.playRedAt(0);
         line.playBlueAt( 0 );
@@ -124,6 +122,7 @@ public class LineTest {
     }
     @Test public void test11BlueWinsByDiagonalLine() {
         Line line = new Line(6, 6, 'C');
+        line.playRedAt(5);
         line.playBlueAt(0);
         line.playRedAt(1);
         line.playBlueAt(1);
@@ -142,6 +141,7 @@ public class LineTest {
     }
     @Test public void test12RedWinsByDiagonalLine(){
         Line line = new Line( 6, 6, 'C');
+        line.playRedAt(5);
         line.playBlueAt(3);
         line.playRedAt(2);
         line.playBlueAt(2);
@@ -159,4 +159,5 @@ public class LineTest {
             assertEquals("Red player won", e.getMessage());
         }
     }
+// falta test de que solo empiece rojo
 }
