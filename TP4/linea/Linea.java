@@ -2,29 +2,34 @@ package linea;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
-public class Linea {
+public class Line {
 	
-	private ArrayList<ArrayList<Character>> tablero = new ArrayList();
-	private int juegoBase;
-	private int juegoAltura;
-	private char juegoModo;
-	
-	private int red;
-	private int blue;
-	private char turno = 'B';
+	private ArrayList<ArrayList<Character>> board = new ArrayList();
+	private int gameBase;
+	private int gameHeight;
+	private TriumphType gameTriumphType;
+	private List<GameState> possibleCurrentGameStates = new ArrayList<GameState>( Arrays.asList( new TurnBlue(), 
+																		   						 new GameFinished() ) );
+	private GameState gameState = new TurnBlue();
 
-	public Linea(int base, int altura, char modo) {
+	private int playsCount = 0;
+	
+	public Line(int base, int height, char type) {
+		
 		if ((base > 0)   &&
-			(altura > 0) &&
-		    (modo == 'A' || modo == 'B' || modo == 'C')) {
-			juegoBase = base;
-			juegoAltura = altura;
-			juegoModo = modo;
+			(height > 0) &&
+		    (type == 'A' || type == 'B' || type == 'C')) {
+			
+			gameBase = base;
+			gameHeight = height;
+			gameTriumphType = TriumphType.typeFor(type);
 	
-			for (int i = 0; i < juegoBase; i++) {
-				tablero.add(new ArrayList());
+			for (int i = 0; i < gameBase; i++) {
+				board.add(new ArrayList());
 			}
 		}
 		else {
@@ -32,201 +37,170 @@ public class Linea {
 		}
 	}
 	
-	public Linea playRedAt(int columna) {
-		if (turno == 'R'			   &&
-			columnaIsInBounds(columna) && 
-			columnaIsPlayable(columna) &&
-			! finished()) {
-			tablero.get(columna - 1).add('R');
-			red++;
-			turno = 'B';
+	public Line dropPieceWithColorAt(Character color, int column) {
+		board.get(column - 1).add(color);
+		return this;
+	}
+	
+	public void changeTurnTo(GameState nextTurn) {
+		playsCount++;
+		possibleCurrentGameStates.remove(0);
+		possibleCurrentGameStates.add(0, nextTurn);
+		gameState = possibleCurrentGameStates.stream()
+						   					 .filter(turnInstance -> ( playsCount < 4 &&
+								   					  ! turnInstance.gameFinished() ) ||
+								   					( playsCount >= 4 &&
+								   					  turnInstance.gameFinished() == finished() ) )
+						   .toList()
+						   .get(0);
+	}
+	
+	public Line playRedAt(int column) {
+		if (columnIsValid(column)) {
+			
+			gameState.playRedInGameWith(this, column);
 			return this;
 		}
 		else {
-			throw new RuntimeException("columna inadecuada");
+			throw new RuntimeException("Inadequate column.");
 		}
 	}	
 
-	public Linea playBlueAt(int columna) {
-		if (turno == 'B'			   &&
-			columnaIsInBounds(columna) && 
-			columnaIsPlayable(columna) &&
-			! finished()) {
+	public Line playBlueAt(int column) {
+		if (columnIsValid(column)) {
 			
-			tablero.get(columna - 1).add('B');
-			blue++;
-			turno = 'R';
+			gameState.playBlueInGameWith(this, column);
 			return this;
 		}
 		else {
-			throw new RuntimeException("No es posible jugar.");
+			throw new RuntimeException("Can not play.");
 		}
 	}	
-	
-	public String show() {
-		String grid = "|";
-		for (int j = 0; j < juegoBase; j++) {
-			grid += "---|";
-		}
-		grid += "\n";
-		for (int i = juegoAltura - 1; i >= 0; i--) {
-			String file = "|";
-			for (int j = 0; j < juegoBase; j++) {
-				file += " " + deQueColorEs(tablero, j, i) + " |";
-			}
-			file += "\n" + "|";
-			for (int j = 0; j < juegoBase; j++) {
-				file += "---|";
-			}
-			file += "\n";
-			grid += file;
-		}
-		return grid;
-	}
 	
 	public boolean finished() {
-		return ganoBlue() ||
-			   ganoRed()  ||
-			   empate();
-	}
-	
-	private boolean empate() {
-		return red + blue == juegoBase * juegoAltura;
+		return blueWins() ||
+			   redWins()  ||
+			   draw();
 	}
 
-	private boolean ganoRed() {
-		return ganoHorizontal('R') 		  ||
-			   ganoVertical('R') 		  ||
-			   ganoDiagonalCreciente('R') ||
-			   ganoDiagonalDecreciente('R');
+	private boolean draw() {
+		return playsCount == gameBase * gameHeight;
 	}
 
-	private boolean ganoBlue() {
-		return ganoHorizontal('B') 		  ||
-			   ganoVertical('B') 		  ||
-		   	   ganoDiagonalCreciente('B') ||
-		   	   ganoDiagonalDecreciente('B');
+	private boolean redWins() {
+		return gameTriumphType.redWonInCurrentType( this );
 	}
 	
-	private boolean ganoVertical(Character color) {
-		return IntStream.range(0, juegoBase)
-						.anyMatch(i -> 4 <= IntStream.range(0, juegoAltura)
-													 .takeWhile(j -> deQueColorEs(tablero, i, j) == color)
+	private boolean blueWins() {
+		return gameTriumphType.blueWonInCurrentType( this );
+	}
+	
+	public boolean verificyTriumphInTypeAAs(char color) {
+		return horizontalTriumph(color) ||
+			   verticalTriumph(color);
+	}
+	
+	public boolean verificyTriumphInTypeBAs(char color) {
+		return increasingDiagonalTriumph(color) ||
+			   decreasingDiagonalTriumph(color);
+	}
+	
+	public boolean verificyTriumphInTypeCAs(char color) {
+		return horizontalTriumph(color) 	    || 
+			   verticalTriumph(color)	 	    ||
+			   increasingDiagonalTriumph(color) ||
+			   decreasingDiagonalTriumph(color);
+	}
+	
+	private int getRow(int column) {
+		return board.get(column - 1).size();
+	}
+	
+	public boolean actualPieceVerticalTriumph(Character color, int column) {
+		return 4 <= IntStream.range(0, gameHeight)
+							 .takeWhile(y -> getColorAt(column - 1, y) == color)
+							 .count() ;
+	}
+	
+	public boolean actualPieceHorizontalTriumph(Character color, int column) {
+		return 4 <= IntStream.range(0, gameBase)
+							 .takeWhile(xCoord -> getColorAt(xCoord, getRow(column) - 1) == color)
+							 .count() ;
+	}
+	
+	public boolean actualPieceIncreasingDiagonalTriumph(Character color, int column) {
+		return 4 <= IntStream.range(0, gameHeight)
+							 .takeWhile(y -> getColorAt(column - getRow(column) + y, y) == color)
+							 .count() ;
+	}
+	
+	public boolean actualPieceDecreasingDiagonalTriumph(Character color, int column) {
+		return 4 <= IntStream.range(0, gameHeight)
+							 .takeWhile(y -> getColorAt(column - 1 + getRow(column) - 1 - y, y) == color)
+							 .count() ;
+	}
+	
+	private boolean verticalTriumph(Character color) {
+		return IntStream.range(0, gameBase)
+						.anyMatch(i -> 4 <= IntStream.range(0, gameHeight)
+													 .takeWhile(j -> getColorAt(i, j) == color)
 													 .count() );
 	}
 	
-	private boolean ganoHorizontal(Character color) {
-		return IntStream.range(0, juegoAltura)
-        				.anyMatch(j -> 4 <= IntStream.range(0, juegoBase)
-        											 .takeWhile(i -> deQueColorEs(tablero, i, j) == color)
+	private boolean horizontalTriumph(Character color) {
+		return IntStream.range(0, gameHeight)
+        				.anyMatch(j -> 4 <= IntStream.range(0, gameBase)
+        											 .takeWhile(i -> getColorAt(i, j) == color)
         											 .count() );
 	}
 	
-	private boolean ganoDiagonalCreciente(Character color) {
-		return IntStream.range(- juegoAltura, juegoBase)
-						.anyMatch(i -> 4 == IntStream.range(0, juegoBase)
-													 .takeWhile(j -> deQueColorEs(tablero, i + j, j) == color)
+	private boolean increasingDiagonalTriumph(Character color) {
+		return IntStream.range(- gameHeight, gameBase)
+						.anyMatch(i -> 4 == IntStream.range(0, gameBase)
+													 .takeWhile(j -> getColorAt(i + j, j) == color)
 													 .count() );
 	}
 	
-	private boolean ganoDiagonalDecreciente(Character color) {
-		return IntStream.range(0, juegoBase + juegoAltura)
-						.anyMatch(i -> 4 <= IntStream.range(0, juegoBase)
-													 .takeWhile(j -> deQueColorEs(tablero, i - j, j) == color)
+	private boolean decreasingDiagonalTriumph(Character color) {
+		return IntStream.range(0, gameBase + gameHeight)
+						.anyMatch(i -> 4 <= IntStream.range(0, gameBase)
+													 .takeWhile(j -> getColorAt(i - j, j) == color)
 													 .count() );
 	}
 	
-// VERTICAL:
-//		for (int i = 0; i < juegoBase; i++) {
-//			int connected = 0;
-//			for (int j = 0; j < juegoAltura; j++) {
-//				if (deQueColorEs(tablero, i, j) == color) {
-//					connected++;
-//				}
-//				if (deQueColorEs(tablero, i, j) != color) {
-//					connected = 0;
-//				}
-//				if (connected == 4) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-		
-// HORIZONTAL:	
-//		for (int i = 0; i < juegoAltura; i++) {
-//			int connected = 0;
-//			for (int j = 0; j < juegoBase; j++) {
-//				if (deQueColorEs(tablero, j, i) == color) {
-//					connected++;
-//				}
-//				if (deQueColorEs(tablero, j, i) != color) {
-//					connected = 0;
-//				}
-//				if (connected == 4) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-		
-// DIAGONAL CRECIENTE:
-//		for (int i = - juegoAltura; i < juegoBase; i++) {
-//			int connected = 0;
-//			for (int j = 0; j < juegoAltura; j++) {
-//				if (deQueColorEs(tablero, i + j, j) == color) {
-//					connected++;
-//				}
-//				if (deQueColorEs(tablero, i + j, j) != color) {
-//					connected = 0;
-//				}
-//				if (connected == 4) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-		
-// DIAGONAL DECRECIENTE:
-//		for (int i = juegoBase + juegoAltura; i > 0; i--) {
-//			int connected = 0;
-//			for (int j = 0; j < juegoAltura; j++) {
-//				if (deQueColorEs(tablero, i - j, j) == color) {
-//					connected++;
-//				}
-//				if (deQueColorEs(tablero, i - j, j) != color) {
-//					connected = 0;
-//				}
-//				if (connected == 4) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-	
-	private boolean columnaIsPlayable(int columna) {
-		return tablero.get(columna - 1).size() != juegoAltura;
+	private boolean columnIsValid(int column) {
+		return board.get(column - 1).size() != gameHeight &&
+			   1 <= column && column <= gameBase;
 	}
 	
-	private boolean columnaIsInBounds(int columna) {
-		return 1 <= columna && columna <= juegoBase;
-	}
-	
-	private Character deQueColorEs(ArrayList<ArrayList<Character>> tablero, int x, int y) {
+	private Character getColorAt(int x, int y) {
 		if (x < 0 || 
 			y < 0 || 
-			x >= juegoBase || 
-			y >= juegoAltura ||
-			tablero.get(x).size() <= y) {
+			x >= gameBase || 
+			y >= gameHeight ||
+			board.get(x).size() <= y) {
 			
 			return ' ';			
 		}
 		else {
-			return tablero.get(x).get(y);
+			return board.get(x).get(y);
 		}
+	}
+	
+	public String show() {
+		String line = "┼" + IntStream.range(0, gameBase)
+        .mapToObj(i -> "───┼")
+        .collect(Collectors.joining()) + "\n";
+		
+		String grid = line + IntStream.range(0, gameHeight)
+									  .mapToObj(i -> "│" + IntStream.range(0, gameBase).mapToObj(j -> " " + getColorAt(j, gameHeight - 1 - i) + " │")
+											  											.collect(Collectors.joining()) + "\n" + line)
+									  .collect(Collectors.joining());
+
+		return grid;
 	}
 
 	public ArrayList<ArrayList<Character>> tablero() {
-		return tablero;
+		return board;
 	}
 }
