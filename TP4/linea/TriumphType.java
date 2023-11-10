@@ -53,4 +53,6 @@ public abstract class TriumphType {
 				currentPieceDecreasingDiagonalTriumph(color, column, line);
 	}
 
+	public abstract char getTriumphType();
+
 }

@@ -15,4 +15,9 @@ public class TypeA extends TriumphType {
 		return currentPieceHorizontalTriumph(color, column, line)         ||
 				currentPieceVerticalTriumph(color, column, line);
 	}
+
+	@Override
+	public char getTriumphType() {
+		return 'A';
+	}
 }

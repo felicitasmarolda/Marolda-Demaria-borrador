@@ -104,6 +104,10 @@ public class Line {
 		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( color, lastPlayedColumn, this );
 	}
 
+	public char getTriumphType() {
+		return gameTriumphType.getTriumphType();
+	}
+
 	private boolean draw() {
 		return board.stream()
 				.allMatch( columnArray -> columnArray.size() == gameHeight );

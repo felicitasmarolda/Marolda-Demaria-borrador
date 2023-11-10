@@ -62,6 +62,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('R'));
         assertFalse( line.wins('B'));
+        assertEquals('A', line.getTriumphType());
     }
 	
 	@Test public void test09BlueWinsByVerticalLineAsTypeA(){
@@ -70,6 +71,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('B'));
         assertFalse( line.wins('R'));
+        assertEquals('A', line.getTriumphType());
     }
 	
 	@Test public void test10BlueWinsByCrecentLineAsTypeB(){
@@ -78,6 +80,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('B'));
         assertFalse( line.wins('R'));
+        assertEquals('B', line.getTriumphType());
     }
 	
 	@Test public void test11BlueWinsByDecrecentLineAsTypeB(){
@@ -86,6 +89,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('B'));
         assertFalse( line.wins('R'));
+        assertEquals('B', line.getTriumphType());
     }
 
     @Test public void test12BlueWinsByHorizontalLineAsTypeC(){
@@ -94,6 +98,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('B'));
         assertFalse( line.wins('R'));
+        assertEquals('C', line.getTriumphType());
     }
 
     @Test public void test13RedWinsByVerticalLineAsTypeC(){
@@ -102,6 +107,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('R'));
         assertFalse( line.wins('B'));
+        assertEquals('C', line.getTriumphType());
     }
 
     @Test public void test14RedWinsByCrescentLineAsTypeC(){
@@ -110,6 +116,7 @@ public class LineTest {
         assertTrue( line.finished() );
         assertTrue( line.wins('R'));
         assertFalse( line.wins('B'));
+        assertEquals('C', line.getTriumphType());
     }
 	
 	@Test public void test15CantPlayWhenGameEnded(){

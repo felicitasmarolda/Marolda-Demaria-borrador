@@ -15,4 +15,7 @@ public class TypeNull extends TriumphType {
 	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
 		return false;
 	}
+	public char getTriumphType() {
+		return ' ';
+	}
 }

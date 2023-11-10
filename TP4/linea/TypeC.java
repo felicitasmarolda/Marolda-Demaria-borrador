@@ -16,4 +16,7 @@ public class TypeC extends TriumphType {
                 currentPieceVerticalTriumph(color, column, line)   		  ||
                 currentPieceDiagonalTriumph(color, column, line);
     }
+    public char getTriumphType() {
+        return 'C';
+    }
 }
