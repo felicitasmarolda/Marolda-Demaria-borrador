@@ -1,23 +1,19 @@
 package linea;
 
-public class TypeNull extends TriumphType {
+public class TypeC extends TriumphType {
 
 	public boolean canHandle(char mode) {
-		return mode != 'A' && 
-			   mode != 'B' &&
-			   mode != 'C';
+		return mode == 'C';
 	}
 
 	public Line checkMeAsTriumphTypeFor(Line line) {
-		throw new RuntimeException("Parámetro de tipo de estrategia inválido.");
+		line.establishTriumphType(new TypeC());
+		return line;
 	}
 	
-
-//	public boolean wonInCurrentType(Line line, char color, int column) {
-//		return false;
-//	}
-	
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(Line line, char color, int column) {
-		return false;	
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
+		return currentPieceHorizontalTriumph(color, column, line)         ||
+			   currentPieceVerticalTriumph(color, column, line)   		  ||
+			   currentPieceDiagonalTriumph(color, column, line);	
 	}
 }

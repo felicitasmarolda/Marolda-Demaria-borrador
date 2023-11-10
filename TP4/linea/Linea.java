@@ -9,15 +9,14 @@ import java.util.stream.Collectors;
 public class Line {
 	
 	private ArrayList<ArrayList<Character>> board = new ArrayList();
-	private int gameBase;
-	private int gameHeight;
+	public int gameBase;
+	public int gameHeight;
 	private TriumphType gameTriumphType;
-	private List<GameState> possibleCurrentGameStates = new ArrayList<GameState>( Arrays.asList( new TurnBlue(), 
+	private List<GameState> possibleCurrentGameStates = new ArrayList<GameState>( Arrays.asList( new TurnRed(), 
 																		   						 new GameFinished() ) );
-	private GameState gameState = new TurnBlue();
+	private GameState gameState = new TurnRed();
 
-	private int lastPlayedColumnPosition;
-	private int playsCount;
+	private int lastPlayedColumn;
 	
 	public Line(int base, int height, char type) {
 		
@@ -76,19 +75,16 @@ public class Line {
 
 	public Line dropPieceWithColorAt(char color, int column) {
 		board.get(column - 1).add(color);
-		lastPlayedColumnPosition = column;
+		lastPlayedColumn = column;
 		return this;
 	}
 	
 	public void changeTurnTo(GameState nextTurn) {
-		playsCount++;
 		possibleCurrentGameStates.remove(0);
 		possibleCurrentGameStates.add(0, nextTurn);
 		gameState = possibleCurrentGameStates.stream()
-						   					 .filter(turnInstance -> ( playsCount < 4 &&
-								   					  ! turnInstance.gameFinished() ) ||
-								   					( playsCount >= 4 &&
-								   					  turnInstance.gameFinished() == finishedBeingTurnOf( gameState.turnColor() ) ) )
+						   					 .filter(turnInstance -> turnInstance.gameFinished() == 
+						   					 						 finishedBeingTurnOf( gameState.turnColor() ) )
 						   					 .toList()
 						   					 .get(0);
 	}
@@ -104,61 +100,16 @@ public class Line {
 			   draw();
 	}
 	
-	private boolean wins(char color) {
-		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( this, color, lastPlayedColumnPosition );
+	public boolean wins(char color) {
+		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( color, lastPlayedColumn, this );
 	}
 
 	private boolean draw() {
-		return playsCount == gameBase * gameHeight;
-	}
-		
-//	public boolean verifyTriumphInTypeAAs(char color, int column) {
-//		return actualPieceHorizontalTriumph(color, column) ||
-//			   actualPieceVerticalTriumph(color, column);
-//	}
-//	
-//	public boolean verifyTriumphInTypeBAs(char color, int column) {
-//		return actualPieceIncreasingDiagonalTriumph(color, column) ||
-//			   actualPieceDecreasingDiagonalTriumph(color, column);
-//	}
-//	
-//	public boolean verifyTriumphInTypeCAs(char color, int column) {
-//		return actualPieceHorizontalTriumph(color, column)         ||
-//			   actualPieceVerticalTriumph(color, column)   		   ||
-//			   actualPieceIncreasingDiagonalTriumph(color, column) || 
-//			   actualPieceDecreasingDiagonalTriumph(color, column);
-//	}
-	
-	public boolean currentPieceVerticalTriumph(char color, int column) {
-		return 4 <= IntStream.range(0, gameHeight)
-							 .takeWhile(y -> getColorAt(column - 1, y) == color)
-							 .count() ;
+		return board.stream()
+					.allMatch( columnArray -> columnArray.size() == gameHeight );
 	}
 	
-	public boolean currentPieceHorizontalTriumph(char color, int column) {
-		return 4 <= IntStream.range(0, gameBase)
-							 .takeWhile(xCoord -> getColorAt(xCoord, getRow(column) - 1) == color)
-							 .count() ;
-	}
-	
-	public boolean currentPieceIncreasingDiagonalTriumph(char color, int column) {
-		return 4 <= IntStream.range(0, gameHeight)
-							 .takeWhile(y -> getColorAt(column - getRow(column) + y, y) == color)
-							 .count() ;
-	}
-	
-	public boolean currentPieceDecreasingDiagonalTriumph(char color, int column) {
-		return 4 <= IntStream.range(0, gameHeight)
-							 .takeWhile(y -> getColorAt(column - 1 + getRow(column) - 1 - y, y) == color)
-							 .count() ;
-	}
-	
-	public boolean currentPieceDiagonalTriumph(char color, int column) {
-		return currentPieceIncreasingDiagonalTriumph(color, column) ||
-			   currentPieceDecreasingDiagonalTriumph(color, column);
-	}
-	
-	private Character getColorAt(int x, int y) {
+	public Character getColorAt(int x, int y) {
 		if (x < 0 || 
 			y < 0 || 
 			x >= gameBase || 
@@ -172,7 +123,7 @@ public class Line {
 		}
 	}
 	
-	private int getRow(int column) {
+	public int getRow(int column) {
 		return board.get(column - 1).size();
 	}
 	

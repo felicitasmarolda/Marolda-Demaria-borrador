@@ -11,12 +11,8 @@ public class TypeA extends TriumphType {
 		return line;
 	}
 
-//	public boolean wonInCurrentType(Line line, char color, int column) {
-//		return line.verifyTriumphInTypeAAs(color, column);
-//	}
-
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(Line line, char color, int column) {
-		return line.currentPieceHorizontalTriumph(color, column)         ||
-			   line.currentPieceVerticalTriumph(color, column);	
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
+		return currentPieceHorizontalTriumph(color, column, line)         ||
+			   currentPieceVerticalTriumph(color, column, line);	
 	}
 }
