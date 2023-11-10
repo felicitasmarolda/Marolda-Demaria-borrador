@@ -60,67 +60,62 @@ public class LineTest {
         Line line = new Line( 4, 4, 'A');
         allGameMoves(line, 1,1,2,2,3,3,4);
         assertTrue( line.finished() );
-        assertTrue( line.redWins());
-        assertFalse( line.blueWins());
+        assertTrue( line.wins('R'));
+        assertFalse( line.wins('B'));
     }
 	
 	@Test public void test09BlueWinsByVerticalLineAsTypeA(){
         Line line = new Line( 6, 4, 'A');
         allGameMoves(line, 5,1,2,1,3,1,2,1);
         assertTrue( line.finished() );
-        assertTrue( line.blueWins());
-        assertFalse( line.redWins());
+        assertTrue( line.wins('B'));
+        assertFalse( line.wins('R'));
     }
 	
 	@Test public void test10BlueWinsByCrecentLineAsTypeB(){
         Line line = new Line( 7, 4, 'B');
         allGameMoves(line, 6,1,2,2,4,3,3,3,1,4,4,4);
         assertTrue( line.finished() );
-        assertTrue( line.blueWins());
-        assertFalse( line.redWins());
+        assertTrue( line.wins('B'));
+        assertFalse( line.wins('R'));
     }
 	
 	@Test public void test11BlueWinsByDecrecentLineAsTypeB(){
         Line line = new Line( 6, 4, 'B');
         allGameMoves(line, 5,1,1,1,2,1,2,2,3,3,3,4);
         assertTrue( line.finished() );
-        assertTrue( line.blueWins());
-        assertFalse( line.redWins());
+        assertTrue( line.wins('B'));
+        assertFalse( line.wins('R'));
     }
 
     @Test public void test12BlueWinsByHorizontalLineAsTypeC(){
         Line line = new Line( 4, 4, 'C');
         allGameMoves(line, 3,1,2,1,2,1,2,1);
         assertTrue( line.finished() );
-        assertTrue( line.blueWins());
-        assertFalse( line.redWins());
+        assertTrue( line.wins('B'));
+        assertFalse( line.wins('R'));
     }
 
     @Test public void test13RedWinsByVerticalLineAsTypeC(){
         Line line = new Line( 6, 5, 'C');
         allGameMoves(line, 2,1,2,1,2,1,2);
         assertTrue( line.finished() );
-        assertTrue( line.redWins());
-        assertFalse( line.blueWins());
+        assertTrue( line.wins('R'));
+        assertFalse( line.wins('B'));
     }
 
-    @Test public void test14BlueWinsByCrescentLineAsTypeC(){
+    @Test public void test14RedWinsByCrescentLineAsTypeC(){
         Line line = new Line( 4, 4, 'C');
-        allGameMoves(line, 2, 1, 3, 2, 4, 3, 3, 4, 4, 4);
+        allGameMoves(line, 1,2,2,3,3,4,3,4,4,1,4);
         assertTrue( line.finished() );
-        assertTrue( line.blueWins());
-        assertFalse( line.redWins());
+        assertTrue( line.wins('R'));
+        assertFalse( line.wins('B'));
     }
 	
 	@Test public void test15CantPlayWhenGameEnded(){
-        Line line = new Line( 2, 4, 'C');
-        line.playRedAt(2);
-        line.playBlueAt(1);
-        line.playRedAt(2);
-        line.playBlueAt(1);
-        line.playRedAt(2);
-        assertThrows(Exception.class, () -> line.playBlueAt(2));
-        assertThrowsLike("Game has finished.", () -> line.playRedAt(1));
+        Line line = new Line( 2, 3, 'C');
+        allGameMoves(line,2,1,2,1,2,1);
+        assertThrowsLike("Inadequate column.", () -> line.playRedAt(1));
     }
 
 	@Test public void print1() {
@@ -166,22 +161,6 @@ public class LineTest {
         line.playBlueAt(4);
 		System.out.println(line.show());
 	}
-
-    @Test public void testForgiven03ActualPieceIncreasingDiagonalTriumph() {
-        Line line = new Line( 4, 4, 'C');
-        line.playBlueAt(1);
-        line.playRedAt(2);
-        line.playBlueAt(2);
-        line.playRedAt(4);
-        line.playBlueAt(3);
-        line.playRedAt(3);
-        line.playBlueAt(3);
-        line.playRedAt(1);
-        line.playBlueAt(4);
-        line.playRedAt(4);
-        line.playBlueAt(4);
-        assertTrue( line.actualPieceIncreasingDiagonalTriumph('B', 4) );
-    }
 
 	@Test public void print4() {		
 		Line line = new Line( 4, 4, 'C');

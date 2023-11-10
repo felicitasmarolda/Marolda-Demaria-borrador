@@ -11,11 +11,7 @@ public class TypeB extends TriumphType {
 		return line;
 	}
 
-//	public boolean wonInCurrentType(Line line, char color, int column) {
-//		return line.verifyTriumphInTypeBAs(color, column);
-//	}
-
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(Line line, char color, int column) {
-		return line.currentPieceDiagonalTriumph(color, column);
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
+		return currentPieceDiagonalTriumph(color, column, line);
 	}
 }

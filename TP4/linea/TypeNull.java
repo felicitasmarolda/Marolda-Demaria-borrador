@@ -12,8 +12,7 @@ public class TypeNull extends TriumphType {
 		throw new RuntimeException("Parámetro de tipo de estrategia inválido.");
 	}
 
-
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(Line line, char color, int column) {
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
 		return false;
 	}
 }
