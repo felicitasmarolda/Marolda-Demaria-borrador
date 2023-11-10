@@ -13,4 +13,8 @@ public class GameFinished extends GameState {
 	public boolean gameFinished() {
 		return true;
 	}
+
+	public Character turnColor() {
+		return null;
+	}
 }

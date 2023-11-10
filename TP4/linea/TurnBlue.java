@@ -16,4 +16,8 @@ public class TurnBlue extends GameState {
 	public boolean gameFinished() {
 		return false;
 	}
+
+	public Character turnColor() {
+		return 'B';
+	}
 }

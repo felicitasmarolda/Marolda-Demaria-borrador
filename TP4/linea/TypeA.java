@@ -2,15 +2,21 @@ package linea;
 
 public class TypeA extends TriumphType {
 
-	public boolean redWonInCurrentType(Line line) {
-		return line.verificyTriumphInTypeAAs('R');
-	}
-
-	public boolean blueWonInCurrentType(Line line) {
-		return line.verificyTriumphInTypeAAs('B');
-	}
-
-	public boolean canHandle(Character mode) {
+	public boolean canHandle(char mode) {
 		return mode == 'A';
+	}
+
+	public Line checkMeAsTriumphTypeFor(Line line) {
+		line.establishTriumphType(new TypeA());
+		return line;
+	}
+
+//	public boolean wonInCurrentType(Line line, char color, int column) {
+//		return line.verifyTriumphInTypeAAs(color, column);
+//	}
+
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(Line line, char color, int column) {
+		return line.currentPieceHorizontalTriumph(color, column)         ||
+			   line.currentPieceVerticalTriumph(color, column);	
 	}
 }
