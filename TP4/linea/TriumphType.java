@@ -3,6 +3,7 @@ package linea;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class TriumphType {
 
@@ -13,8 +14,8 @@ public abstract class TriumphType {
 	
 	public static TriumphType typeFor(Character typeChar) {
 		return possibleModes.stream()
-			    			.filter(typeInstance -> typeInstance.canHandle(typeChar))
-			    			.toList()
+			    			.filter(typeInstance -> typeInstance.canHandle(typeChar)).collect(Collectors
+							.toList())
 			    			.get(0);
 	}
 	
