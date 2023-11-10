@@ -1,4 +1,4 @@
-package juego.linea;
+package linea;
 
 import org.junit.Test;
 
