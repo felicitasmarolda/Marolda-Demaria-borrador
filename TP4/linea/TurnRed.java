@@ -16,4 +16,8 @@ public class TurnRed extends GameState {
 	public boolean gameFinished() {
 		return false;
 	}
+
+	public Character turnColor() {
+		return 'R';
+	}
 }
