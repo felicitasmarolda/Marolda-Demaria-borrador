@@ -2,18 +2,18 @@ package linea;
 
 public class TypeC extends TriumphType {
 
-	public boolean canHandle(char mode) {
-		return mode == 'C';
+	public boolean canHandle(char type) {
+		return type == 'C';
 	}
 
-	public Line checkMeAsTriumphTypeFor(Line line) {
-		line.establishTriumphType(new TypeC());
-		return line;
+	public FourInLine checkMeAsTriumphTypeFor(FourInLine fourInLine) {
+		fourInLine.establishTriumphType(new TypeC());
+		return fourInLine;
 	}
 	
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
-		return currentPieceHorizontalTriumph(color, column, line)         ||
-			   currentPieceVerticalTriumph(color, column, line)   		  ||
-			   currentPieceDiagonalTriumph(color, column, line);	
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
+		return currentPieceHorizontalTriumph(fourInLine, color, column)         ||
+			   currentPieceVerticalTriumph(fourInLine, color, column)   		  ||
+			   currentPieceDiagonalTriumph(color, column, fourInLine);	
 	}
 }

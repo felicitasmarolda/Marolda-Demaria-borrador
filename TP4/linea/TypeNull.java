@@ -2,17 +2,17 @@ package linea;
 
 public class TypeNull extends TriumphType {
 
-	public boolean canHandle(char mode) {
-		return mode != 'A' && 
-			   mode != 'B' &&
-			   mode != 'C';
+	public boolean canHandle(char type) {
+		return type != 'A' && 
+			   type != 'B' &&
+			   type != 'C';
 	}
 
-	public Line checkMeAsTriumphTypeFor(Line line) {
+	public FourInLine checkMeAsTriumphTypeFor(FourInLine fourInLine) {
 		throw new RuntimeException("Parámetro de tipo de estrategia inválido.");
 	}
 	
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
 		return false;	
 	}
 }

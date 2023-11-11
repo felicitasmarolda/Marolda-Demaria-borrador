@@ -2,17 +2,17 @@ package linea;
 
 public class TypeA extends TriumphType {
 
-	public boolean canHandle(char mode) {
-		return mode == 'A';
+	public boolean canHandle(char type) {
+		return type == 'A';
 	}
 
-	public Line checkMeAsTriumphTypeFor(Line line) {
-		line.establishTriumphType(new TypeA());
-		return line;
+	public FourInLine checkMeAsTriumphTypeFor(FourInLine fourInLine) {
+		fourInLine.establishTriumphType(new TypeA());
+		return fourInLine;
 	}
 
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
-		return currentPieceHorizontalTriumph(color, column, line)         ||
-			   currentPieceVerticalTriumph(color, column, line);	
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
+		return currentPieceHorizontalTriumph(fourInLine, color, column)         ||
+			   currentPieceVerticalTriumph(fourInLine, color, column);	
 	}
 }

@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
-public class Line {
+public class FourInLine {
 	
 	private ArrayList<ArrayList<Character>> board = new ArrayList();
 	public int gameBase;
 	public int gameHeight;
-	private TriumphType gameTriumphType;
-	private List<GameState> possibleCurrentGameStates = new ArrayList<GameState>( Arrays.asList( new TurnRed(), 
-																		   						 new GameFinished() ) );
-	private GameState gameState = new TurnRed();
+	private TriumphType gameTriumphType = new TypeNull();
+	private List<GameState> possibleCurrentGameStates = new ArrayList<GameState>( Arrays.asList( new StateTurnRed(), 
+																		   						 new StateFinished() ) );
+	private GameState gameState = new StateTurnRed();
 
-	private int lastPlayedColumn;
+	private int lastPlayedColumn = 1;
 	
-	public Line(int base, int height, char type) {
+	public FourInLine(int base, int height, char type) {
 		
 		if ((base > 0)   &&
 			(height > 0)) {
@@ -36,17 +36,17 @@ public class Line {
 		}
 	}
 	
-	public Line checkAndDetermineTriumphType(char type) {
+	private FourInLine checkAndDetermineTriumphType(char type) {
 		TriumphType typeInstance = TriumphType.typeFor(type);
 		return typeInstance.checkMeAsTriumphTypeFor( this );
 	}
 	
-	public Line establishTriumphType(TriumphType type) {
+	public FourInLine establishTriumphType(TriumphType type) {
 		gameTriumphType = type;
 		return this;
 	}
 	
-	public Line playRedAt(int column) {
+	public FourInLine playRedAt(int column) {
 		if (columnIsValid(column)) {
 			
 			gameState.playRedInGameWith(this, column);
@@ -57,14 +57,14 @@ public class Line {
 		}
 	}	
 
-	public Line playBlueAt(int column) {
+	public FourInLine playBlueAt(int column) {
 		if (columnIsValid(column)) {
 			
 			gameState.playBlueInGameWith(this, column);
 			return this;
 		}
 		else {
-			throw new RuntimeException("Can not play.");
+			throw new RuntimeException("Can not play in this column.");
 		}
 	}	
 
@@ -73,35 +73,28 @@ public class Line {
 			   1 <= column && column <= gameBase;
 	}
 
-	public Line dropPieceWithColorAt(char color, int column) {
+	public FourInLine dropPieceWithColorAt(char color, int column) {
 		board.get(column - 1).add(color);
 		lastPlayedColumn = column;
 		return this;
 	}
 	
-	public void changeTurnTo(GameState nextTurn) {
+	public void changeTurnTo(GameState nextTurnGameState) {
 		possibleCurrentGameStates.remove(0);
-		possibleCurrentGameStates.add(0, nextTurn);
-		gameState = possibleCurrentGameStates.stream()
-						   					 .filter(turnInstance -> turnInstance.gameFinished() == 
-						   					 						 finishedBeingTurnOf( gameState.turnColor() ) )
-						   					 .toList()
-						   					 .get(0);
+		possibleCurrentGameStates.add(0, nextTurnGameState);
+		possibleCurrentGameStates.stream()
+						   		 .filter( turnInstance -> turnInstance.gameFinished() == finished() )
+						   		 .forEach( turnInstance -> gameState = turnInstance);
 	}
 	
 	public boolean finished() {
-		return wins('B') ||
-			   wins('R') ||
-			   draw();
-	}
-	
-	public boolean finishedBeingTurnOf(char color) {
-		return wins(color) ||
+		return wins('O') ||
+			   wins('X') ||
 			   draw();
 	}
 	
 	public boolean wins(char color) {
-		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( color, lastPlayedColumn, this );
+		return gameTriumphType.verifyTriumphInGameAsTypeWithColorAndColumn( this, color, lastPlayedColumn );
 	}
 
 	private boolean draw() {
@@ -109,7 +102,7 @@ public class Line {
 					.allMatch( columnArray -> columnArray.size() == gameHeight );
 	}
 	
-	public Character getColorAt(int x, int y) {
+	public char getColorAt(int x, int y) {
 		if (x < 0 || 
 			y < 0 || 
 			x >= gameBase || 
@@ -128,12 +121,12 @@ public class Line {
 	}
 	
 	public String show() {
-		String line = "┼" + IntStream.range(0, gameBase)
-        .mapToObj(i -> "───┼")
+		String line = "|" + IntStream.range(0, gameBase)
+        .mapToObj(i -> "---|")
         .collect(Collectors.joining()) + "\n";
 		
 		String grid = line + IntStream.range(0, gameHeight)
-									  .mapToObj(i -> "│" + IntStream.range(0, gameBase).mapToObj(j -> " " + getColorAt(j, gameHeight - 1 - i) + " │")
+									  .mapToObj(i -> "|" + IntStream.range(0, gameBase).mapToObj(j -> " " + getColorAt(j, gameHeight - 1 - i) + " |")
 											  										   .collect(Collectors.joining()) + "\n" + line)
 									  .collect(Collectors.joining());
 
