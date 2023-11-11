@@ -127,7 +127,6 @@ public class LineTest {
 
 	@Test public void print1() {
 		Line line = new Line( 4, 4, 'C');
-        line.playBlueAt(1);
         line.playRedAt(1);
         line.playBlueAt(1);
         line.playRedAt(2);
