@@ -64,13 +64,12 @@ public class FourInLine {
 			return this;
 		}
 		else {
-			throw new RuntimeException("Can not play in this column.");
+			throw new RuntimeException("Inadequate column.");
 		}
 	}	
 
 	private boolean columnIsValid(int column) {
-		return board.get(column - 1).size() != gameHeight &&
-			   1 <= column && column <= gameBase;
+		return 1 <= column && column <= gameBase && board.get(column - 1).size() != gameHeight;
 	}
 
 	public FourInLine dropPieceWithColorAt(char color, int column) {

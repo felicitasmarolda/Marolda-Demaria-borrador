@@ -13,23 +13,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 public class FourInLineTest {
-
-    @Test public void test00NewLinea() {
-        FourInLine game = new FourInLine(3, 5, 'C');
-        assertEquals(3 , game.tablero().size()) ;
+    @Test public void test00NewLine(){
+        assertEquals(showInTest("|   |   |   |\n"), new FourInLine( 3, 3, 'C' ).show() );
     }
 
     @Test public void test01RedPlaysCorrectlyAndShown(){
         FourInLine fourInLine = new FourInLine( 3, 3, 'C' );
         fourInLine.playRedAt( 1 );
-        assertEquals( 'X', fourInLine.tablero().get( 0 ).get( 0 ));
+        assertEquals(showInTest("| X |   |   |\n"), fourInLine.show() );
     }
 
     @Test public void test02BLuePlaysCorrectlyAndShown(){
         FourInLine fourInLine = new FourInLine( 3, 3, 'C' );
         fourInLine.playRedAt(2);
         fourInLine.playBlueAt( 1 );
-        assertEquals( 'O', fourInLine.tablero().get( 0 ).get( 0 ));
+        assertEquals(showInTest("| O | X |   |\n"), fourInLine.show() );
     }
 
     @Test public void test03GameEndsWhenBoardFull(){
@@ -38,29 +36,7 @@ public class FourInLineTest {
         assertTrue( fourInLine.finished() );
     }
 
-    @Test public void test04CantPlayInNonExistentColumn() {
-        FourInLine fourInLine = new FourInLine( 3, 2, 'C');
-        assertThrowsLike("Index 3 out of bounds for length 3", () -> fourInLine.playRedAt(4));
-    }
-
-    @Test public void test05CanNotPlayInFullColumn(){
-        FourInLine fourInLine = new FourInLine( 3, 6, 'C');
-        allGameMoves(fourInLine, 1,1,1,1,1,1);
-        assertThrowsLike("Inadequate column.", () -> fourInLine.playRedAt(1));
-    }
-
-    @Test public void test06BlueCanNotStartTheGame(){
-        FourInLine fourInLine = new FourInLine( 3, 3, 'C');
-        assertThrowsLike("Incorrect turn.", () -> fourInLine.playBlueAt(1));
-    }
-
-    @Test public void test07CanNotPlayTwoTimesInARow(){
-        FourInLine fourInLine = new FourInLine( 4, 6, 'C');
-        allGameMoves(fourInLine, 1,2,2,1,1);
-        assertThrowsLike("Incorrect turn.", () -> fourInLine.playRedAt(1));
-    }
-
-    @Test public void test08RedWinsByHorizontalLineAsTypeA(){
+    @Test public void test04RedWinsByHorizontalLineAsTypeA(){
         FourInLine fourInLine = new FourInLine( 4, 4, 'A');
         allGameMoves(fourInLine, 1,1,2,2,3,3,4);
         assertTrue( fourInLine.finished() );
@@ -68,7 +44,7 @@ public class FourInLineTest {
         assertFalse( fourInLine.wins('O'));
     }
 
-    @Test public void test09BlueWinsByVerticalLineAsTypeA(){
+    @Test public void test05BlueWinsByVerticalLineAsTypeA(){
         FourInLine fourInLine = new FourInLine( 6, 4, 'A');
         allGameMoves(fourInLine, 5,1,2,1,3,1,2,1);
         assertTrue( fourInLine.finished() );
@@ -76,19 +52,19 @@ public class FourInLineTest {
         assertFalse( fourInLine.wins('X'));
     }
 
-    @Test public void test10BlueDoesNotWinByIncreasingDiagonalAsTypeA(){
+    @Test public void test06BlueDoesNotWinByIncreasingDiagonalAsTypeA(){
         FourInLine fourInLine = new FourInLine( 7, 4, 'A');
         allGameMoves(fourInLine, 6,1,2,2,4,3,3,3,1,4,4,4);
         assertFalse( fourInLine.finished() );
     }
 
-    @Test public void test10BlueDoesNotWinByDecreasingDiagonalAsTypeA(){
+    @Test public void test07BlueDoesNotWinByDecreasingDiagonalAsTypeA(){
         FourInLine fourInLine = new FourInLine( 7, 4, 'A');
         allGameMoves(fourInLine, 5,1,1,1,2,1,2,2,3,3,3,4);
         assertFalse( fourInLine.finished() );
     }
 
-    @Test public void test10BlueWinsByCrecentLineAsTypeB(){
+    @Test public void test08BlueWinsByCrecentLineAsTypeB(){
         FourInLine fourInLine = new FourInLine( 7, 4, 'B');
         allGameMoves(fourInLine, 6,1,2,2,4,3,3,3,1,4,4,4);
         assertTrue( fourInLine.finished() );
@@ -96,12 +72,24 @@ public class FourInLineTest {
         assertFalse( fourInLine.wins('X'));
     }
 
-    @Test public void test11BlueWinsByDecrecentLineAsTypeB(){
+    @Test public void test09BlueWinsByDecrecentLineAsTypeB(){
         FourInLine fourInLine = new FourInLine( 6, 4, 'B');
         allGameMoves(fourInLine, 5,1,1,1,2,1,2,2,3,3,3,4);
         assertTrue( fourInLine.finished() );
         assertTrue( fourInLine.wins('O'));
         assertFalse( fourInLine.wins('X'));
+    }
+
+    @Test public void test10BlueDoesNotWinByVerticalLineAsTypeB(){
+        FourInLine fourInLine = new FourInLine( 4, 4, 'B');
+        allGameMoves(fourInLine, 3,1,2,1,2,1,2,1);
+        assertFalse( fourInLine.finished() );
+    }
+
+    @Test public void test11RedDoesNotWinByHorizontalLineAsTypeB(){
+        FourInLine fourInLine = new FourInLine( 4, 4, 'B');
+        allGameMoves(fourInLine, 1,1,2,2,3,3,4);
+        assertFalse( fourInLine.finished() );
     }
 
     @Test public void test12BlueWinsByHorizontalLineAsTypeC(){
@@ -127,12 +115,53 @@ public class FourInLineTest {
         assertTrue( fourInLine.wins('O'));
         assertFalse( fourInLine.wins('X'));
     }
+    @Test public void test15BlueWinsByDecrecentLineAsTypeC(){
+        FourInLine fourInLine = new FourInLine( 6, 4, 'C');
+        allGameMoves(fourInLine, 5,1,1,1,2,1,2,2,3,3,3,4);
+        assertTrue( fourInLine.finished() );
+        assertTrue( fourInLine.wins('O'));
+        assertFalse( fourInLine.wins('X'));
+    }
 
-    @Test public void test15CantPlayWhenGameEnded(){
+    @Test public void test16CantPlayWhenGameEnded(){
         FourInLine fourInLine = new FourInLine( 2, 4, 'C');
         allGameMoves(fourInLine, 2,1,2,1,2,1,2);
         assertThrows(Exception.class, () -> fourInLine.playBlueAt(2));
         assertThrowsLike("Game has finished.", () -> fourInLine.playRedAt(1));
+    }
+
+    @Test public void test17CantPlayInNonExistentColumn() {
+        FourInLine fourInLine = new FourInLine( 3, 2, 'C');
+        assertThrowsLike("Inadequate column.", () -> fourInLine.playRedAt(4));
+    }
+
+    @Test public void test18CanNotPlayInFullColumn(){
+        FourInLine fourInLine = new FourInLine( 3, 6, 'C');
+        allGameMoves(fourInLine, 1,1,1,1,1,1);
+        assertThrowsLike("Inadequate column.", () -> fourInLine.playRedAt(1));
+    }
+
+    @Test public void test19BlueCanNotStartTheGame(){
+        FourInLine fourInLine = new FourInLine( 3, 3, 'C');
+        assertThrowsLike("Incorrect turn.", () -> fourInLine.playBlueAt(1));
+    }
+
+    @Test public void test20CanNotPlayTwoTimesInARow(){
+        FourInLine fourInLine = new FourInLine( 4, 6, 'C');
+        allGameMoves(fourInLine, 1,2,2,1,1);
+        assertThrowsLike("Incorrect turn.", () -> fourInLine.playRedAt(1));
+    }
+
+    @Test public void test21BaseCanNotBeLessThan0(){
+        assertThrowsLike("Parámetros inválidos.", () -> new FourInLine( -1, 4, 'C'));
+    }
+
+    @Test public void test22HeightCanNotBeLessThan0(){
+        assertThrowsLike("Parámetros inválidos.", () -> new FourInLine( 4, -1, 'C'));
+    }
+
+    @Test public void test23TypeCanNotBeAnythingOtherThanABC(){
+        assertThrowsLike("Parámetro de tipo de estrategia inválido.", () -> new FourInLine( 4, 6, 'T'));
     }
 
     @Test public void print1() {
@@ -184,6 +213,13 @@ public class FourInLineTest {
                     } else {
                         fourInLine.playBlueAt(column);
                     } });
+    }
+    private String showInTest(String changedLine){
+        return "|---|---|---|\n" +
+                "|   |   |   |\n" +
+                "|---|---|---|\n" +
+                "|   |   |   |\n" +
+                "|---|---|---|\n" + changedLine + "|---|---|---|\n";
     }
 
 }

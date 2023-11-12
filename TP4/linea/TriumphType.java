@@ -9,7 +9,8 @@ public abstract class TriumphType {
 
 	private static List<TriumphType> possibleModes = new ArrayList<TriumphType>( Arrays.asList(new TypeA(),
 			  																		   new TypeB(),
-			  																		   new TypeC()) );
+			  																		   new TypeC(),
+			   																		   new TypeNull()) );
 	
 	public static TriumphType typeFor(Character typeChar) {
 		List<TriumphType> typeForTypeChar = new ArrayList();
