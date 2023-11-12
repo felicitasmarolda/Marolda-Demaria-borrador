@@ -1,8 +1,7 @@
 package linea;
 
 public abstract class GameState {
-	public abstract Line playBlueInGameWith(Line line, int column);
-	public abstract Line playRedInGameWith(Line line, int column);
-	public abstract boolean gameFinished();
-	public abstract Character turnColor();
+	protected abstract FourInLine playBlueInGameWith(FourInLine fourInLine, int column);
+	protected abstract FourInLine playRedInGameWith(FourInLine fourInLine, int column);
+	protected abstract boolean gameFinished();
 }

@@ -2,19 +2,16 @@ package linea;
 
 public class TypeB extends TriumphType {
 
-	public boolean canHandle(char mode) {
-		return mode == 'B';
+	public boolean canHandle(char type) {
+		return type == 'B';
 	}
-
-	public Line checkMeAsTriumphTypeFor(Line line) {
-		line.establishTriumphType(new TypeB());
-		return line;
+	
+	public FourInLine checkMeAsTriumphTypeFor(FourInLine fourInLine) {
+		fourInLine.establishTriumphType(new TypeB());
+		return fourInLine;
 	}
-
-	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(char color, int column, Line line) {
-		return currentPieceDiagonalTriumph(color, column, line);
-	}
-	public char getTriumphType() {
-		return 'B';
+	
+	public boolean verifyTriumphInGameAsTypeWithColorAndColumn(FourInLine fourInLine, char color, int column) {
+		return currentPieceDiagonalTriumph(color, column, fourInLine);	
 	}
 }
