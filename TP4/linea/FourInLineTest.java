@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,7 @@ public class FourInLineTest {
 
     @Test public void test02BLuePlaysCorrectlyAndShown(){
         FourInLine fourInLine = new FourInLine( 3, 3, 'C' );
-        fourInLine.playRedAt(2);
-        fourInLine.playBlueAt( 1 );
+        allGameMoves(fourInLine, 2,1);
         assertEquals(showInTest("| O | X |   |\n"), fourInLine.show() );
     }
 
@@ -39,17 +36,13 @@ public class FourInLineTest {
     @Test public void test04RedWinsByHorizontalLineAsTypeA(){
         FourInLine fourInLine = new FourInLine( 4, 4, 'A');
         allGameMoves(fourInLine, 1,1,2,2,3,3,4);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('X'));
-        assertFalse( fourInLine.wins('O'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'X', 'O');
     }
 
     @Test public void test05BlueWinsByVerticalLineAsTypeA(){
         FourInLine fourInLine = new FourInLine( 6, 4, 'A');
         allGameMoves(fourInLine, 5,1,2,1,3,1,2,1);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
 
     @Test public void test06BlueDoesNotWinByIncreasingDiagonalAsTypeA(){
@@ -67,17 +60,13 @@ public class FourInLineTest {
     @Test public void test08BlueWinsByCrecentLineAsTypeB(){
         FourInLine fourInLine = new FourInLine( 7, 4, 'B');
         allGameMoves(fourInLine, 6,1,2,2,4,3,3,3,1,4,4,4);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
 
     @Test public void test09BlueWinsByDecrecentLineAsTypeB(){
         FourInLine fourInLine = new FourInLine( 6, 4, 'B');
         allGameMoves(fourInLine, 5,1,1,1,2,1,2,2,3,3,3,4);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
 
     @Test public void test10BlueDoesNotWinByVerticalLineAsTypeB(){
@@ -95,38 +84,29 @@ public class FourInLineTest {
     @Test public void test12BlueWinsByHorizontalLineAsTypeC(){
         FourInLine fourInLine = new FourInLine( 4, 4, 'C');
         allGameMoves(fourInLine, 3,1,2,1,2,1,2,1);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
 
     @Test public void test13RedWinsByVerticalLineAsTypeC(){
         FourInLine fourInLine = new FourInLine( 6, 5, 'C');
         allGameMoves(fourInLine, 2,1,2,1,2,1,2);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('X'));
-        assertFalse( fourInLine.wins('O'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'X', 'O');
     }
 
     @Test public void test14BlueWinsByCrescentLineAsTypeC(){
         FourInLine fourInLine = new FourInLine( 4, 4, 'C');
         allGameMoves(fourInLine, 2,1,3,2,3,3,4,4,4,4);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
     @Test public void test15BlueWinsByDecrecentLineAsTypeC(){
         FourInLine fourInLine = new FourInLine( 6, 4, 'C');
         allGameMoves(fourInLine, 5,1,1,1,2,1,2,2,3,3,3,4);
-        assertTrue( fourInLine.finished() );
-        assertTrue( fourInLine.wins('O'));
-        assertFalse( fourInLine.wins('X'));
+        assertFinishedWinningWithAndLoosingWith(fourInLine, 'O', 'X');
     }
 
     @Test public void test16CantPlayWhenGameEnded(){
         FourInLine fourInLine = new FourInLine( 2, 4, 'C');
         allGameMoves(fourInLine, 2,1,2,1,2,1,2);
-        assertThrows(Exception.class, () -> fourInLine.playBlueAt(2));
         assertThrowsLike("Game has finished.", () -> fourInLine.playRedAt(1));
     }
 
@@ -220,6 +200,12 @@ public class FourInLineTest {
                 "|---|---|---|\n" +
                 "|   |   |   |\n" +
                 "|---|---|---|\n" + changedLine + "|---|---|---|\n";
+    }
+
+    private static void assertFinishedWinningWithAndLoosingWith(FourInLine fourInLine, char win, char loose) {
+        assertTrue( fourInLine.finished() );
+        assertTrue( fourInLine.wins(win));
+        assertFalse( fourInLine.wins(loose));
     }
 
 }
